@@ -12,7 +12,6 @@ import org.springframework.social.slideshare.api.SlideShare;
 import org.springframework.social.slideshare.api.SlideshowOperations;
 import org.springframework.social.support.ClientHttpRequestFactorySelector;
 import org.springframework.social.support.HttpRequestDecorator;
-import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -104,14 +103,10 @@ public class SlideShareTemplate implements SlideShare {
 					builder.queryParam("ts", ts);
 					builder.queryParam("hash", hash);
 
-					// TODO: BUILD parameters: api_key, ts, hash,
+					// TODO: debug the url
 					String url = builder.build().toString();
 
 					return builder.build().toUri();
-//
-//					return URI.create(
-//							super.getURI().toString() + (((super.getURI().getQuery() == null) ? "?" : "&")
-//																 + "oauth2_access_token=" + apiKey));
 				}
 			};
 
