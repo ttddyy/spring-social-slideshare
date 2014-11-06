@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Slideshow>
+    <ID>13343768</ID>
+    <Title>MY_TITLE</Title>
+    <Description>MY_DESCRIPTION</Description>
+    <Status>2</Status>
+    <Username>MY_USERNAME</Username>
+    <URL>MY_URL</URL>
+    <ThumbnailURL>MY_THUMBNAIL_URL</ThumbnailURL>
+    <ThumbnailSize>MY_THUMBNAIL_SIZE</ThumbnailSize>
+    <ThumbnailSmallURL>MY_THUMBNAIL_SMALL_URL</ThumbnailSmallURL>
+    <Embed>MY_EMBED</Embed>
+    <Created>2012-06-15 21:08:19 UTC</Created>
+    <Updated>2012-06-19 17:29:50 UTC</Updated>
+    <Language>en</Language>
+    <Format>pdf</Format>
+    <Download>1</Download>
+    <DownloadUrl>MY_DOWNLOAD_URL</DownloadUrl>
+    <SlideshowType>0</SlideshowType>
+    <InContest>0</InContest>
+    <UserID>25500108</UserID>
+    <ExternalAppUserID>123456789</ExternalAppUserID>
+    <PPTLocation>MY_PPT_LOCATION</PPTLocation>
+    <StrippedTitle>MY_STRIPPED_TITLE</StrippedTitle>
+    <Tags>
+        <Tag Count="1" Owner="1">TAG_1</Tag>
+        <Tag Count="1" Owner="0">TAG_2</Tag>
+        <Tag Count="2" Owner="1">TAG_3</Tag>
+    </Tags>
+    <Audio>0</Audio>
+    <NumDownloads>372</NumDownloads>
+    <NumViews>69333</NumViews>
+    <NumComments>9</NumComments>
+    <NumFavorites>59</NumFavorites>
+    <NumSlides>10</NumSlides>
+    <RelatedSlideshows>
+        <RelatedSlideshowID rank="1">14475005</RelatedSlideshowID>
+        <RelatedSlideshowID rank="2">13127718</RelatedSlideshowID>
+        <RelatedSlideshowID rank="3">33232373</RelatedSlideshowID>
+    </RelatedSlideshows>
+    <PrivacyLevel>0</PrivacyLevel>
+    <FlagVisible>1</FlagVisible>
+    <ShowOnSS>0</ShowOnSS>
+    <SecretURL>0</SecretURL>
+    <AllowEmbed>0</AllowEmbed>
+    <ShareWithContacts>0</ShareWithContacts>
+</Slideshow>
