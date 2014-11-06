@@ -1,5 +1,8 @@
 package org.springframework.social.slideshare.api.impl;
 
+import com.fasterxml.jackson.databind.Module;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
@@ -7,9 +10,12 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
 import org.springframework.social.slideshare.api.SlideShare;
 import org.springframework.social.slideshare.api.SlideshowOperations;
+import org.springframework.social.slideshare.api.domain.Slideshow;
+import org.springframework.social.slideshare.api.impl.xml.SlideshowMixIn;
 import org.springframework.social.support.ClientHttpRequestFactorySelector;
 import org.springframework.social.support.HttpRequestDecorator;
 import org.springframework.web.client.RestTemplate;
@@ -17,6 +23,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.net.URI;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,6 +41,7 @@ public class SlideShareTemplate implements SlideShare {
 
 
 	public SlideShareTemplate(String apiKey, String sharedSecret) {
+		// TODO: cleanup initial setup of these objects
 		this.restTemplate = createRestTemplateWithCulledMessageConverters();
 		registerSlideShareInterceptor(apiKey, sharedSecret);
 		configureRestTemplate(this.restTemplate);
@@ -62,8 +70,33 @@ public class SlideShareTemplate implements SlideShare {
 	protected List<HttpMessageConverter<?>> getMessageConverters() {
 		List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();
 		messageConverters.add(new StringHttpMessageConverter());
-		messageConverters.add(new MappingJackson2XmlHttpMessageConverter());
+		messageConverters.add(getXmlConverter());
 		return messageConverters;
+	}
+
+	protected HttpMessageConverter<?> getXmlConverter() {
+
+		List<Module> modules = new ArrayList<>();
+		modules.add(new JacksonXmlModule() {
+			@Override
+			public void setupModule(SetupContext context) {
+				super.setupModule(context);
+				context.setMixInAnnotations(Slideshow.class, SlideshowMixIn.class);
+				context.setMixInAnnotations(Slideshow.Tag.class, SlideshowMixIn.TagMixin.class);
+				context.setMixInAnnotations(Slideshow.RelatedSlideshow.class, SlideshowMixIn.RelatedSlideshowMixin.class);
+			}
+		});
+
+		ObjectMapper objectMapper =
+				new Jackson2ObjectMapperBuilder()
+						.modules(modules)
+						.dateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss zzz"))  // TODO: cleanup
+						.createXmlMapper(true)
+						.build();
+
+		MappingJackson2XmlHttpMessageConverter converter = new MappingJackson2XmlHttpMessageConverter();
+		converter.setObjectMapper(objectMapper);
+		return converter;
 	}
 
 	@Override
