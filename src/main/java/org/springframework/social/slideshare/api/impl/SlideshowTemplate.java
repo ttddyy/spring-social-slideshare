@@ -6,8 +6,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Tadaya Tsuyukubo
@@ -15,6 +13,9 @@ import java.util.Map;
 public class SlideshowTemplate implements SlideshowOperations {
 	public static final String BASE_URL = "https://www.slideshare.net/api/2/";
 	public static final String GET_SLIDESHOW_URL = BASE_URL + "get_slideshow";
+	public static final String GET_SLIDESHOW_BY_TAG_URL = BASE_URL + "get_slideshows_by_tag";
+	public static final String GET_SLIDESHOW_BY_GROUP_URL = BASE_URL + "get_slideshows_by_group";
+	public static final String GET_SLIDESHOW_BY_USER_URL = BASE_URL + "get_slideshows_by_user";
 
 	private final RestOperations restOperations;
 
