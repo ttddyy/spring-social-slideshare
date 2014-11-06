@@ -76,7 +76,7 @@ public class Slideshow {
 	private String format;
 	private boolean isDownloadable;
 	private String downloadUrl;
-	private SlideshowType slideshowType;
+	private Type type;
 	private boolean inContest;
 	private String userId;
 	private String externalAppUserId;
@@ -105,7 +105,7 @@ public class Slideshow {
 		FAILED
 	}
 
-	public static enum SlideshowType {
+	public static enum Type {
 		// 0 if presentation, 1 if document, 2 if a portfolio, 3 if video
 		PRESENTATION,
 		DOCUMENT,
@@ -295,12 +295,12 @@ public class Slideshow {
 		this.downloadUrl = downloadUrl;
 	}
 
-	public SlideshowType getSlideshowType() {
-		return slideshowType;
+	public Type getType() {
+		return type;
 	}
 
-	public void setSlideshowType(SlideshowType slideshowType) {
-		this.slideshowType = slideshowType;
+	public void setType(Type type) {
+		this.type = type;
 	}
 
 	public boolean isInContest() {
