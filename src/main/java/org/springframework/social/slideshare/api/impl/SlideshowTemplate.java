@@ -6,6 +6,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.List;
+
 
 /**
  * @author Tadaya Tsuyukubo
@@ -48,5 +50,24 @@ public class SlideshowTemplate implements SlideshowOperations {
 		String url = builder.toUriString();
 		Slideshow slideshow = this.restOperations.getForObject(url, Slideshow.class);
 		return slideshow;
+	}
+
+	public List<Slideshow> getSlideshowsByTag(String tag, int limit, int offset, boolean detailed) {
+		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_SLIDESHOW_URL);
+
+		builder.queryParam("tag", tag);
+		builder.queryParam("limit", limit);  // optional in api, but not specifying limit returns 0 result.
+		if (offset > 0) {
+			builder.queryParam("offset", offset);
+		}
+		if (detailed) {
+			// when detailed==true, add "detailed" parameter
+			builder.queryParam("detailed", 1);
+		}
+
+		String url = builder.toUriString();
+//		this.restOperations.getForObject(url, Slideshow.class);  // TODO: imple
+		return null;
+
 	}
 }
