@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  get_slideshows_by_tag?tag=slideshare&limit=2&api_key=...&ts=...
+-->
+
+<Tag>
+    <Name>slideshare</Name>
+    <Count>5678</Count>
+    <Slideshow>
+        <ID>41231427</ID>
+        <Title>TITLE_1</Title>
+        <Description>DESCRIPTION_1</Description>
+        <Status>2</Status>
+        <Username>USERNAME_1</Username>
+        <URL>URL_1</URL>
+        <ThumbnailURL>THUMBNAIL_URL_1</ThumbnailURL>
+        <ThumbnailSize>[170,130]</ThumbnailSize>
+        <ThumbnailSmallURL>THUMBNAIL_SMALL_URL_1</ThumbnailSmallURL>
+        <Embed>EMBED_1</Embed>
+        <Created>2014-11-06 23:08:32 UTC</Created>
+        <Updated>2014-11-06 23:09:34 UTC</Updated>
+        <Language>es</Language>
+        <Format>pptx</Format>
+        <Download>1</Download>
+        <DownloadUrl>DOWNLOAD_URL_1</DownloadUrl>
+        <SlideshowType>0</SlideshowType>
+        <InContest>0</InContest>
+    </Slideshow>
+    <Slideshow>
+        <ID>41231405</ID>
+        <Title>TITLE_2</Title>
+        <Description>DESCRIPTION_2</Description>
+        <Status>2</Status>
+        <Username>USERNAME_2</Username>
+        <URL>URL_2</URL>
+        <ThumbnailURL>THUMBNAIL_URL_2</ThumbnailURL>
+        <ThumbnailSize>[99,999]</ThumbnailSize>
+        <ThumbnailSmallURL>THUMBNAIL_SMALL_URL_2</ThumbnailSmallURL>
+        <Embed>EMBED_2</Embed>
+        <Created>2014-11-07 23:08:00 UTC</Created>
+        <Updated>2014-11-07 23:09:32 UTC</Updated>
+        <Language>es</Language>
+        <Format>pptx</Format>
+        <Download>1</Download>
+        <DownloadUrl>DOWNLOAD_URL_2</DownloadUrl>
+        <SlideshowType>0</SlideshowType>
+        <InContest>0</InContest>
+    </Slideshow>
+
+</Tag>

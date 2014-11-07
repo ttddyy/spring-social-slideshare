@@ -65,7 +65,7 @@ public abstract class SlideshowMixIn {
 	@JacksonXmlProperty (localName = "DownloadUrl")
 	String downloadUrl;
 	@JacksonXmlProperty (localName = "SlideshowType")
-	String type;
+	String slideshowType;
 	@JacksonXmlProperty ( localName = "InContest" )
 	@JsonDeserialize (using = NumberToBooleanDeserializer.class)
 	String inContest;

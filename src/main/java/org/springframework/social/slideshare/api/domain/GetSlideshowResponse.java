@@ -1,5 +1,8 @@
 package org.springframework.social.slideshare.api.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * For get slideshows by tag, group, user.
  *
@@ -16,5 +19,38 @@ public class GetSlideshowResponse {
 	private RequestType requestType;
 	private String name;
 	private int count;
-	private Slideshow[] slideshows;
+	private List<Slideshow> slideshows;
+
+	public RequestType getRequestType() {
+		return requestType;
+	}
+
+	public void setRequestType(RequestType requestType) {
+		this.requestType = requestType;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+	public List<Slideshow> getSlideshows() {
+		return slideshows;
+	}
+
+	public void setSlideshows(List<Slideshow> slideshows) {
+		this.slideshows = slideshows;
+	}
+
 }
