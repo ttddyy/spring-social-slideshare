@@ -1,6 +1,7 @@
 package org.springframework.social.slideshare.api.domain;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Tadaya Tsuyukubo
@@ -82,14 +83,14 @@ public class Slideshow {
 	private String externalAppUserId;
 	private String pptLocation;
 	private String strippedTitle;
-	private Tag[] tags;
+	private List<Tag> tags;
 	private boolean audio;
 	private long numDownloads;
 	private long numViews;
 	private long numComments;
 	private long numFavorites;
 	private long numSlides;
-	private RelatedSlideshow[] relatedSlideshows;
+	private List<RelatedSlideshow> relatedSlideshows;
 	private boolean isPrivate;
 	private boolean isFlagged;
 	private boolean showOnSlideShare;
@@ -343,11 +344,11 @@ public class Slideshow {
 		this.strippedTitle = strippedTitle;
 	}
 
-	public Tag[] getTags() {
+	public List<Tag> getTags() {
 		return tags;
 	}
 
-	public void setTags(Tag[] tags) {
+	public void setTags(List<Tag> tags) {
 		this.tags = tags;
 	}
 
@@ -399,11 +400,11 @@ public class Slideshow {
 		this.numSlides = numSlides;
 	}
 
-	public RelatedSlideshow[] getRelatedSlideshows() {
+	public List<RelatedSlideshow> getRelatedSlideshows() {
 		return relatedSlideshows;
 	}
 
-	public void setRelatedSlideshows(RelatedSlideshow[] relatedSlideshows) {
+	public void setRelatedSlideshows(List<RelatedSlideshow> relatedSlideshows) {
 		this.relatedSlideshows = relatedSlideshows;
 	}
 

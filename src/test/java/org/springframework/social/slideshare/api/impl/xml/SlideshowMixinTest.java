@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.springframework.social.slideshare.api.domain.Slideshow;
 
 import static org.hamcrest.Matchers.arrayWithSize;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.springframework.social.slideshare.api.impl.xml.TestUtils.*;
@@ -44,16 +45,26 @@ public class SlideshowMixinTest {
 		assertThat(slideshow.getPptLocation(), is("MY_PPT_LOCATION"));
 		assertThat(slideshow.getStrippedTitle(), is("MY_STRIPPED_TITLE"));
 
-		assertThat(slideshow.getTags(), arrayWithSize(3));
-		assertThat(slideshow.getTags()[0].getCount(), is(1));
-		assertThat(slideshow.getTags()[0].isUsed(), is(true));
-		assertThat(slideshow.getTags()[0].getName(), is("TAG_1"));
-		assertThat(slideshow.getTags()[1].getCount(), is(1));
-		assertThat(slideshow.getTags()[1].isUsed(), is(false));
-		assertThat(slideshow.getTags()[1].getName(), is("TAG_2"));
-		assertThat(slideshow.getTags()[2].getCount(), is(2));
-		assertThat(slideshow.getTags()[2].isUsed(), is(true));
-		assertThat(slideshow.getTags()[2].getName(), is("TAG_3"));
+		assertThat(slideshow.getTags(), hasSize(3));
+		assertThat(slideshow.getTags().get(0).getCount(), is(1));
+		assertThat(slideshow.getTags().get(0).isUsed(), is(true));
+		assertThat(slideshow.getTags().get(0).getName(), is("TAG_1"));
+		assertThat(slideshow.getTags().get(1).getCount(), is(1));
+		assertThat(slideshow.getTags().get(1).isUsed(), is(false));
+		assertThat(slideshow.getTags().get(1).getName(), is("TAG_2"));
+		assertThat(slideshow.getTags().get(2).getCount(), is(2));
+		assertThat(slideshow.getTags().get(2).isUsed(), is(true));
+		assertThat(slideshow.getTags().get(2).getName(), is("TAG_3"));
+//		assertThat(slideshow.getTags(), arrayWithSize(3));
+//		assertThat(slideshow.getTags()[0].getCount(), is(1));
+//		assertThat(slideshow.getTags()[0].isUsed(), is(true));
+//		assertThat(slideshow.getTags()[0].getName(), is("TAG_1"));
+//		assertThat(slideshow.getTags()[1].getCount(), is(1));
+//		assertThat(slideshow.getTags()[1].isUsed(), is(false));
+//		assertThat(slideshow.getTags()[1].getName(), is("TAG_2"));
+//		assertThat(slideshow.getTags()[2].getCount(), is(2));
+//		assertThat(slideshow.getTags()[2].isUsed(), is(true));
+//		assertThat(slideshow.getTags()[2].getName(), is("TAG_3"));
 
 		assertThat(slideshow.isAudio(), is(false));
 		assertThat(slideshow.getNumDownloads(), is(372L));
@@ -62,13 +73,13 @@ public class SlideshowMixinTest {
 		assertThat(slideshow.getNumFavorites(), is(59L));
 		assertThat(slideshow.getNumSlides(), is(10L));
 
-		assertThat(slideshow.getRelatedSlideshows(), arrayWithSize(3));
-		assertThat(slideshow.getRelatedSlideshows()[0].getRank(), is(1));
-		assertThat(slideshow.getRelatedSlideshows()[0].getId(), is("14475005"));
-		assertThat(slideshow.getRelatedSlideshows()[1].getRank(), is(2));
-		assertThat(slideshow.getRelatedSlideshows()[1].getId(), is("13127718"));
-		assertThat(slideshow.getRelatedSlideshows()[2].getRank(), is(3));
-		assertThat(slideshow.getRelatedSlideshows()[2].getId(), is("33232373"));
+		assertThat(slideshow.getRelatedSlideshows(), hasSize(3));
+		assertThat(slideshow.getRelatedSlideshows().get(0).getRank(), is(1));
+		assertThat(slideshow.getRelatedSlideshows().get(0).getId(), is("14475005"));
+		assertThat(slideshow.getRelatedSlideshows().get(1).getRank(), is(2));
+		assertThat(slideshow.getRelatedSlideshows().get(1).getId(), is("13127718"));
+		assertThat(slideshow.getRelatedSlideshows().get(2).getRank(), is(3));
+		assertThat(slideshow.getRelatedSlideshows().get(2).getId(), is("33232373"));
 
 		assertThat(slideshow.isPrivate(), is(false));
 		assertThat(slideshow.isFlagged(), is(true));
