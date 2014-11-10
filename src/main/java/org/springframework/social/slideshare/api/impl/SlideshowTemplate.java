@@ -1,6 +1,7 @@
 package org.springframework.social.slideshare.api.impl;
 
 import org.springframework.social.slideshare.api.SlideshowOperations;
+import org.springframework.social.slideshare.api.domain.GetSlideshowResponse;
 import org.springframework.social.slideshare.api.domain.Slideshow;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestOperations;
@@ -52,8 +53,8 @@ public class SlideshowTemplate implements SlideshowOperations {
 		return slideshow;
 	}
 
-	public List<Slideshow> getSlideshowsByTag(String tag, int limit, int offset, boolean detailed) {
-		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_SLIDESHOW_URL);
+	public GetSlideshowResponse getSlideshowsByTag(String tag, int limit, int offset, boolean detailed) {
+		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_SLIDESHOW_BY_TAG_URL);
 
 		builder.queryParam("tag", tag);
 		builder.queryParam("limit", limit);  // optional in api, but not specifying limit returns 0 result.
@@ -66,8 +67,10 @@ public class SlideshowTemplate implements SlideshowOperations {
 		}
 
 		String url = builder.toUriString();
-//		this.restOperations.getForObject(url, Slideshow.class);  // TODO: imple
-		return null;
+		GetSlideshowResponse response = this.restOperations.getForObject(url, GetSlideshowResponse.class);
+		response.setRequestType(GetSlideshowResponse.RequestType.BY_TAG);
+
+		return response;
 
 	}
 }
