@@ -93,6 +93,7 @@ public abstract class SlideshowMixIn {
 	@JacksonXmlProperty ( localName = "NumSlides" )
 	String numSlides;
 	@JacksonXmlProperty ( localName = "RelatedSlideshows" )
+	@JsonDeserialize ( using = RelatedSlideshowListDeserializer.class )
 	String relatedSlideshows;
 	@JacksonXmlProperty ( localName = "PrivacyLevel" )
 	@JsonDeserialize ( using = NumberToBooleanDeserializer.class )
@@ -112,5 +113,12 @@ public abstract class SlideshowMixIn {
 	@JacksonXmlProperty ( localName = "ShareWithContacts" )
 	@JsonDeserialize ( using = NumberToBooleanDeserializer.class )
 	String shareWithContacts;
+
+	private static final class RelatedSlideshowListDeserializer extends TrimmedListDeserializer<Slideshow.RelatedSlideshow> {
+		@Override
+		public Class<Slideshow.RelatedSlideshow> getElementClass() {
+			return Slideshow.RelatedSlideshow.class;
+		}
+	}
 
 }
