@@ -6,6 +6,9 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlText;
 import org.springframework.social.slideshare.api.domain.Slideshow;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * @author Tadaya Tsuyukubo
  */
@@ -15,10 +18,10 @@ public abstract class SlideshowMixIn {
 	@JsonIgnoreProperties ( ignoreUnknown = true )
 	public static abstract class TagMixin {
 		@JacksonXmlProperty ( isAttribute = true, localName = "Count" )
-		String count;
+		int count;
 		@JacksonXmlProperty ( isAttribute = true, localName = "Owner" )
 		@JsonDeserialize ( using = NumberToBooleanDeserializer.class )
-		String used;
+		boolean used;
 		@JacksonXmlText
 		String name;
 	}
@@ -26,7 +29,7 @@ public abstract class SlideshowMixIn {
 	@JsonIgnoreProperties ( ignoreUnknown = true )
 	public static abstract class RelatedSlideshowMixin {
 		@JacksonXmlProperty ( isAttribute = true, localName = "rank" )
-		String rank;
+		int rank;
 		@JacksonXmlText
 		String id;
 	}
@@ -52,23 +55,23 @@ public abstract class SlideshowMixIn {
 	@JacksonXmlProperty ( localName = "Embed" )
 	String embed;
 	@JacksonXmlProperty (localName = "Created")
-	String created;
+	Date created;
 	@JacksonXmlProperty (localName = "Updated")
-	String updated;
+	Date updated;
 	@JacksonXmlProperty (localName = "Language")
 	String language;
 	@JacksonXmlProperty (localName = "Format")
 	String format;
 	@JacksonXmlProperty ( localName = "Download" )
 	@JsonDeserialize (using = NumberToBooleanDeserializer.class)
-	String isDownloadable;
+	boolean isDownloadable;
 	@JacksonXmlProperty (localName = "DownloadUrl")
 	String downloadUrl;
 	@JacksonXmlProperty (localName = "SlideshowType")
-	String slideshowType;
+	Slideshow.SlideshowType slideshowType;
 	@JacksonXmlProperty ( localName = "InContest" )
 	@JsonDeserialize (using = NumberToBooleanDeserializer.class)
-	String inContest;
+	boolean inContest;
 	@JacksonXmlProperty (localName = "UserID")
 	String userId;
 	@JacksonXmlProperty (localName = "ExternalAppUserID")
@@ -78,10 +81,10 @@ public abstract class SlideshowMixIn {
 	@JacksonXmlProperty ( localName = "StrippedTitle" )
 	String strippedTitle;
 	@JacksonXmlProperty ( localName = "Tags" )
-	String tags;
+	List<Slideshow.Tag> tags;
 	@JacksonXmlProperty ( localName = "Audio" )
 	@JsonDeserialize ( using = NumberToBooleanDeserializer.class )
-	String audio;
+	boolean audio;
 	@JacksonXmlProperty ( localName = "NumDownloads" )
 	String numDownloads;
 	@JacksonXmlProperty ( localName = "NumViews" )
@@ -94,7 +97,7 @@ public abstract class SlideshowMixIn {
 	String numSlides;
 	@JacksonXmlProperty ( localName = "RelatedSlideshows" )
 	@JsonDeserialize ( using = RelatedSlideshowListDeserializer.class )
-	String relatedSlideshows;
+	List<Slideshow.RelatedSlideshow> relatedSlideshows;
 	@JacksonXmlProperty ( localName = "PrivacyLevel" )
 	@JsonDeserialize ( using = NumberToBooleanDeserializer.class )
 	String isPrivate;
