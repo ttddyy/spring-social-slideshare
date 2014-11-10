@@ -8,7 +8,8 @@ import org.springframework.social.slideshare.api.domain.Slideshow;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.springframework.social.slideshare.api.impl.xml.TestUtils.*;
+import static org.springframework.social.slideshare.api.impl.xml.TestUtils.readFile;
+import static org.springframework.social.slideshare.api.impl.xml.TestUtils.verifyUtcDate;
 
 /**
  * @author Tadaya Tsuyukubo
@@ -17,7 +18,7 @@ public class GetSlideshowResponseMappingTest {
 
 	@Test
 	public void getSlideshowByType() throws Exception {
-		ObjectMapper xmlMapper = createXmlMapper();
+		ObjectMapper xmlMapper = JacksonUtils.XML_MAPPER;
 
 		GetSlideshowResponse response = xmlMapper.readValue(readFile("mapping-slideshow-by-tag.xml"), GetSlideshowResponse.class);
 
@@ -66,6 +67,49 @@ public class GetSlideshowResponseMappingTest {
 		assertThat(second.getDownloadUrl(), is("DOWNLOAD_URL_2"));
 		assertThat(second.getSlideshowType(), is(Slideshow.SlideshowType.PRESENTATION));
 		assertThat(second.isInContest(), is(false));
+
+	}
+
+	@Test
+	public void getSlideshowByTypeDetailed() throws Exception {
+		ObjectMapper xmlMapper = JacksonUtils.XML_MAPPER;
+
+		GetSlideshowResponse response = xmlMapper.readValue(readFile("mapping-slideshow-by-tag-detailed.xml"), GetSlideshowResponse.class);
+
+		// TODO: test for RequestType
+		assertThat(response.getName(), is("slideshare"));
+		assertThat(response.getCount(), is(5678));
+
+		assertThat(response.getSlideshows(), hasSize(1));
+
+		Slideshow first = response.getSlideshows().get(0);
+		assertThat(first.getId(), is("41231427"));
+		assertThat(first.getTitle(), is("TITLE_1"));
+		assertThat(first.getDescription(), is("DESCRIPTION_1"));
+		assertThat(first.getStatus(), is(Slideshow.Status.CONVERTED));
+		assertThat(first.getUsername(), is("USERNAME_1"));
+		assertThat(first.getUrl(), is("URL_1"));
+		assertThat(first.getThumbnailUrl(), is("THUMBNAIL_URL_1"));
+		assertThat(first.getThumbnailSize(), is("[170,130]"));
+		assertThat(first.getThumbnailSmallURL(), is("THUMBNAIL_SMALL_URL_1"));
+		assertThat(first.getEmbed(), is("EMBED_1"));
+		verifyUtcDate(first.getCreated(), 2014, 11, 6, 23, 8, 32);  // 2014-11-06 23:08:32 UTC
+		verifyUtcDate(first.getUpdated(), 2014, 11, 6, 23, 9, 34);  // 2014-11-06 23:09:34 UTC
+		assertThat(first.getLanguage(), is("es"));
+		assertThat(first.getFormat(), is("pptx"));
+		assertThat(first.isDownloadable(), is(true));
+		assertThat(first.getDownloadUrl(), is("DOWNLOAD_URL_1"));
+		assertThat(first.getSlideshowType(), is(Slideshow.SlideshowType.PRESENTATION));
+		assertThat(first.isInContest(), is(false));
+
+		// detailed part
+		assertThat(first.getRelatedSlideshows(), hasSize(0));
+		assertThat(first.isPrivate(), is(false));
+		assertThat(first.isFlagged(), is(true));
+		assertThat(first.isShowOnSlideShare(), is(false));
+		assertThat(first.isSecretUrl(), is(false));
+		assertThat(first.isAllowEmbed(), is(false));
+		assertThat(first.isShareWithContacts(), is(false));
 
 	}
 }
