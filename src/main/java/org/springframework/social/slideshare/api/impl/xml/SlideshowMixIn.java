@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author Tadaya Tsuyukubo
  */
-@JsonIgnoreProperties (ignoreUnknown = true)
+@JsonIgnoreProperties ( ignoreUnknown = true )
 public abstract class SlideshowMixIn {
 
 	@JsonIgnoreProperties ( ignoreUnknown = true )
@@ -54,33 +54,34 @@ public abstract class SlideshowMixIn {
 	String thumbnailSmallURL;
 	@JacksonXmlProperty ( localName = "Embed" )
 	String embed;
-	@JacksonXmlProperty (localName = "Created")
+	@JacksonXmlProperty ( localName = "Created" )
 	Date created;
-	@JacksonXmlProperty (localName = "Updated")
+	@JacksonXmlProperty ( localName = "Updated" )
 	Date updated;
-	@JacksonXmlProperty (localName = "Language")
+	@JacksonXmlProperty ( localName = "Language" )
 	String language;
-	@JacksonXmlProperty (localName = "Format")
+	@JacksonXmlProperty ( localName = "Format" )
 	String format;
 	@JacksonXmlProperty ( localName = "Download" )
-	@JsonDeserialize (using = NumberToBooleanDeserializer.class)
+	@JsonDeserialize ( using = NumberToBooleanDeserializer.class )
 	boolean isDownloadable;
-	@JacksonXmlProperty (localName = "DownloadUrl")
+	@JacksonXmlProperty ( localName = "DownloadUrl" )
 	String downloadUrl;
-	@JacksonXmlProperty (localName = "SlideshowType")
+	@JacksonXmlProperty ( localName = "SlideshowType" )
 	Slideshow.SlideshowType slideshowType;
 	@JacksonXmlProperty ( localName = "InContest" )
-	@JsonDeserialize (using = NumberToBooleanDeserializer.class)
+	@JsonDeserialize ( using = NumberToBooleanDeserializer.class )
 	boolean inContest;
-	@JacksonXmlProperty (localName = "UserID")
+	@JacksonXmlProperty ( localName = "UserID" )
 	String userId;
-	@JacksonXmlProperty (localName = "ExternalAppUserID")
+	@JacksonXmlProperty ( localName = "ExternalAppUserID" )
 	String externalAppUserId;
 	@JacksonXmlProperty ( localName = "PPTLocation" )
 	String pptLocation;
 	@JacksonXmlProperty ( localName = "StrippedTitle" )
 	String strippedTitle;
 	@JacksonXmlProperty ( localName = "Tags" )
+	@JsonDeserialize ( using = TagListDeserializer.class )
 	List<Slideshow.Tag> tags;
 	@JacksonXmlProperty ( localName = "Audio" )
 	@JsonDeserialize ( using = NumberToBooleanDeserializer.class )
@@ -121,6 +122,13 @@ public abstract class SlideshowMixIn {
 		@Override
 		public Class<Slideshow.RelatedSlideshow> getElementClass() {
 			return Slideshow.RelatedSlideshow.class;
+		}
+	}
+
+	private static final class TagListDeserializer extends TrimmedListDeserializer<Slideshow.Tag> {
+		@Override
+		public Class<Slideshow.Tag> getElementClass() {
+			return Slideshow.Tag.class;
 		}
 	}
 
