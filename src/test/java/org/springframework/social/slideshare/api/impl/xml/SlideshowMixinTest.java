@@ -18,7 +18,7 @@ public class SlideshowMixinTest {
 	@Test
 	public void slideshowMapping() throws Exception {
 
-		ObjectMapper xmlMapper = createXmlMapper();
+		ObjectMapper xmlMapper = JacksonUtils.XML_MAPPER;
 
 		Slideshow slideshow = xmlMapper.readValue(readFile("mapping-slideshow.xml"), Slideshow.class);
 
