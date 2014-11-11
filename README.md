@@ -33,6 +33,7 @@ ping me at [@ttddyy](https://twitter.com/ttddyy) if you want to contact me. :)
       <version>1.0.0-SNAPSHOT</version>
   </dependency>
 ```
+\* not uploaded maven yet... please compile for now.
 
 # Usage
 
