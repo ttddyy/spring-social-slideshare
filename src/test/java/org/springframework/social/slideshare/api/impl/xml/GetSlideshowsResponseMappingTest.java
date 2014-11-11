@@ -25,7 +25,7 @@ public class GetSlideshowsResponseMappingTest extends AbstractSlideshareTemplate
 		mockServer
 				.expect(requestTo(startsWith("https://www.slideshare.net/api/2/get_slideshows_by_tag")))
 				.andExpect(method(HttpMethod.GET))
-				.andRespond(withSuccess(readFile("mapping-slideshow-by-tag.xml"), MediaType.APPLICATION_XML))
+				.andRespond(withSuccess(readFile("response-get-slideshows-by-tag.xml"), MediaType.APPLICATION_XML))
 		;
 
 
@@ -85,7 +85,7 @@ public class GetSlideshowsResponseMappingTest extends AbstractSlideshareTemplate
 		mockServer
 				.expect(requestTo(startsWith("https://www.slideshare.net/api/2/get_slideshows_by_tag")))
 				.andExpect(method(HttpMethod.GET))
-				.andRespond(withSuccess(readFile("mapping-slideshow-by-tag-detailed.xml"), MediaType.APPLICATION_XML))
+				.andRespond(withSuccess(readFile("response-get-slideshows-by-tag-detailed.xml"), MediaType.APPLICATION_XML))
 		;
 
 

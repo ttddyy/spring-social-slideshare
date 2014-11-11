@@ -24,7 +24,7 @@ public class SlideshowMixinTest extends AbstractSlideshareTemplateTest {
 		mockServer
 				.expect(requestTo(startsWith("https://www.slideshare.net/api/2/get_slideshow")))
 				.andExpect(method(HttpMethod.GET))
-				.andRespond(withSuccess(readFile("mapping-slideshow.xml"), MediaType.APPLICATION_XML))
+				.andRespond(withSuccess(readFile("response-get-slideshow.xml"), MediaType.APPLICATION_XML))
 		;
 
 		Slideshow slideshow = slideshowOperations.getSlideshow("id", "url", "user", "pass", true, true);
