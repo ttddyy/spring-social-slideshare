@@ -3,6 +3,12 @@
 Spring Social provider module for SlideShare API.
 
 
+# Project Status
+
+Actively implementing features!!  
+
+ping me at [@ttddyy](https://twitter.com/ttddyy) if you want to contact me. :)   
+
 # key features
 
 
