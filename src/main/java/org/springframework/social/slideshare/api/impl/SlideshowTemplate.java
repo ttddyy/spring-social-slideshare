@@ -115,7 +115,7 @@ public class SlideshowTemplate implements SlideshowOperations {
 			builder.queryParam("get_unconverted", 1);
 		}
 
-		String url = builder.toUriString();
+		String url = builder.toUriString();  // TODO: add logging
 		GetSlideshowResponse response = this.restOperations.getForObject(url, GetSlideshowResponse.class);
 		response.setRequestType(GetSlideshowResponse.RequestType.BY_USER);
 
