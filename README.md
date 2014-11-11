@@ -28,9 +28,19 @@ Spring Social provider module for SlideShare API.
   </dependency>
 ```
 
+# Usage
+
+## With Spring
+
+## Outside of Spring
+
+
 # development
 
 ## continuous integration
 
+# TODO
 
+- upgrade spring 4.1.2
+  - can change usage of jackson builder
 
