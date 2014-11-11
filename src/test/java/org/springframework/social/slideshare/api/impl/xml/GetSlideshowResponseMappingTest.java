@@ -1,28 +1,37 @@
 package org.springframework.social.slideshare.api.impl.xml;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.social.slideshare.api.domain.GetSlideshowResponse;
 import org.springframework.social.slideshare.api.domain.Slideshow;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static org.springframework.social.slideshare.api.impl.xml.TestUtils.readFile;
 import static org.springframework.social.slideshare.api.impl.xml.TestUtils.verifyUtcDate;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
+import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
 /**
  * @author Tadaya Tsuyukubo
  */
-public class GetSlideshowResponseMappingTest {
+public class GetSlideshowResponseMappingTest extends AbstractSlideshareTemplateTest {
 
 	@Test
-	public void getSlideshowByType() throws Exception {
-		ObjectMapper xmlMapper = JacksonUtils.XML_MAPPER;
+	public void getSlideshowByTag() throws Exception {
 
-		GetSlideshowResponse response = xmlMapper.readValue(readFile("mapping-slideshow-by-tag.xml"), GetSlideshowResponse.class);
+		mockServer
+				.expect(requestTo(startsWith("https://www.slideshare.net/api/2/get_slideshows_by_tag")))
+				.andExpect(method(HttpMethod.GET))
+				.andRespond(withSuccess(readFile("mapping-slideshow-by-tag.xml"), MediaType.APPLICATION_XML))
+		;
 
-		// TODO: test for RequestType
+
+		GetSlideshowResponse response = slideshowOperations.getSlideshowsByTag("tag", 0, 0, false);
+
+		assertThat(response.getRequestType(), is(GetSlideshowResponse.RequestType.BY_TAG));
 		assertThat(response.getName(), is("slideshare"));
 		assertThat(response.getCount(), is(5678));
 
@@ -72,11 +81,17 @@ public class GetSlideshowResponseMappingTest {
 
 	@Test
 	public void getSlideshowByTypeDetailed() throws Exception {
-		ObjectMapper xmlMapper = JacksonUtils.XML_MAPPER;
 
-		GetSlideshowResponse response = xmlMapper.readValue(readFile("mapping-slideshow-by-tag-detailed.xml"), GetSlideshowResponse.class);
+		mockServer
+				.expect(requestTo(startsWith("https://www.slideshare.net/api/2/get_slideshows_by_tag")))
+				.andExpect(method(HttpMethod.GET))
+				.andRespond(withSuccess(readFile("mapping-slideshow-by-tag-detailed.xml"), MediaType.APPLICATION_XML))
+		;
 
-		// TODO: test for RequestType
+
+		GetSlideshowResponse response = slideshowOperations.getSlideshowsByTag("tag", 0, 0, true);
+
+		assertThat(response.getRequestType(), is(GetSlideshowResponse.RequestType.BY_TAG));
 		assertThat(response.getName(), is("slideshare"));
 		assertThat(response.getCount(), is(5678));
 

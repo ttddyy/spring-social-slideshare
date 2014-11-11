@@ -1,26 +1,33 @@
 package org.springframework.social.slideshare.api.impl.xml;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.social.slideshare.api.domain.Slideshow;
 
-import static org.hamcrest.Matchers.arrayWithSize;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
-import static org.springframework.social.slideshare.api.impl.xml.TestUtils.*;
+import static org.springframework.social.slideshare.api.impl.xml.TestUtils.readFile;
+import static org.springframework.social.slideshare.api.impl.xml.TestUtils.verifyUtcDate;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
+import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
 /**
  * @author Tadaya Tsuyukubo
  */
-public class SlideshowMixinTest {
+public class SlideshowMixinTest extends AbstractSlideshareTemplateTest {
 
 	@Test
 	public void slideshowMapping() throws Exception {
 
-		ObjectMapper xmlMapper = JacksonUtils.XML_MAPPER;
+		mockServer
+				.expect(requestTo(startsWith("https://www.slideshare.net/api/2/get_slideshow")))
+				.andExpect(method(HttpMethod.GET))
+				.andRespond(withSuccess(readFile("mapping-slideshow.xml"), MediaType.APPLICATION_XML))
+		;
 
-		Slideshow slideshow = xmlMapper.readValue(readFile("mapping-slideshow.xml"), Slideshow.class);
+		Slideshow slideshow = slideshowOperations.getSlideshow("id", "url", "user", "pass", true, true);
 
 		assertThat(slideshow.getId(), is("13343768"));
 		assertThat(slideshow.getTitle(), is("MY_TITLE"));
@@ -55,16 +62,6 @@ public class SlideshowMixinTest {
 		assertThat(slideshow.getTags().get(2).getCount(), is(2));
 		assertThat(slideshow.getTags().get(2).isUsed(), is(true));
 		assertThat(slideshow.getTags().get(2).getName(), is("TAG_3"));
-//		assertThat(slideshow.getTags(), arrayWithSize(3));
-//		assertThat(slideshow.getTags()[0].getCount(), is(1));
-//		assertThat(slideshow.getTags()[0].isUsed(), is(true));
-//		assertThat(slideshow.getTags()[0].getName(), is("TAG_1"));
-//		assertThat(slideshow.getTags()[1].getCount(), is(1));
-//		assertThat(slideshow.getTags()[1].isUsed(), is(false));
-//		assertThat(slideshow.getTags()[1].getName(), is("TAG_2"));
-//		assertThat(slideshow.getTags()[2].getCount(), is(2));
-//		assertThat(slideshow.getTags()[2].isUsed(), is(true));
-//		assertThat(slideshow.getTags()[2].getName(), is("TAG_3"));
 
 		assertThat(slideshow.isAudio(), is(false));
 		assertThat(slideshow.getNumDownloads(), is(372L));
