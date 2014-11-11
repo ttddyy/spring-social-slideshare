@@ -11,7 +11,7 @@ import java.util.List;
  * @author Tadaya Tsuyukubo
  */
 @JsonIgnoreProperties (ignoreUnknown = true)
-public abstract class GetSlideshowResponseMixin {
+public abstract class GetSlideshowsResponseMixin {
 
 	@JacksonXmlProperty (localName = "Name")
 	String name;

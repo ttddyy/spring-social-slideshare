@@ -1,6 +1,5 @@
 package org.springframework.social.slideshare.api.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,7 +7,7 @@ import java.util.List;
  *
  * @author Tadaya Tsuyukubo
  */
-public class GetSlideshowResponse {
+public class GetSlideshowsResponse {
 
 	public static enum RequestType {
 		BY_TAG,

@@ -1,7 +1,7 @@
 package org.springframework.social.slideshare.api.impl;
 
 import org.springframework.social.slideshare.api.SlideshowOperations;
-import org.springframework.social.slideshare.api.domain.GetSlideshowResponse;
+import org.springframework.social.slideshare.api.domain.GetSlideshowsResponse;
 import org.springframework.social.slideshare.api.domain.Slideshow;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestOperations;
@@ -51,7 +51,7 @@ public class SlideshowTemplate implements SlideshowOperations {
 		return slideshow;
 	}
 
-	public GetSlideshowResponse getSlideshowsByTag(String tag, int limit, int offset, boolean detailed) {
+	public GetSlideshowsResponse getSlideshowsByTag(String tag, int limit, int offset, boolean detailed) {
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_SLIDESHOW_BY_TAG_URL);
 
 		builder.queryParam("tag", tag);
@@ -65,13 +65,13 @@ public class SlideshowTemplate implements SlideshowOperations {
 		}
 
 		String url = builder.toUriString();
-		GetSlideshowResponse response = this.restOperations.getForObject(url, GetSlideshowResponse.class);
-		response.setRequestType(GetSlideshowResponse.RequestType.BY_TAG);
+		GetSlideshowsResponse response = this.restOperations.getForObject(url, GetSlideshowsResponse.class);
+		response.setRequestType(GetSlideshowsResponse.RequestType.BY_TAG);
 
 		return response;
 	}
 
-	public GetSlideshowResponse getSlideshowsByGroup(String groupName, int limit, int offset, boolean detailed) {
+	public GetSlideshowsResponse getSlideshowsByGroup(String groupName, int limit, int offset, boolean detailed) {
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_SLIDESHOW_BY_GROUP_URL);
 
 		builder.queryParam("group_name", groupName);
@@ -85,13 +85,13 @@ public class SlideshowTemplate implements SlideshowOperations {
 		}
 
 		String url = builder.toUriString();
-		GetSlideshowResponse response = this.restOperations.getForObject(url, GetSlideshowResponse.class);
-		response.setRequestType(GetSlideshowResponse.RequestType.BY_GROUP);
+		GetSlideshowsResponse response = this.restOperations.getForObject(url, GetSlideshowsResponse.class);
+		response.setRequestType(GetSlideshowsResponse.RequestType.BY_GROUP);
 
 		return response;
 	}
 
-	public GetSlideshowResponse getSlideshowsByUser(String usernameFor, String username, String password,
+	public GetSlideshowsResponse getSlideshowsByUser(String usernameFor, String username, String password,
 													int limit, int offset, boolean detailed, boolean getUnconverted) {
 
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_SLIDESHOW_BY_USER_URL);
@@ -116,8 +116,8 @@ public class SlideshowTemplate implements SlideshowOperations {
 		}
 
 		String url = builder.toUriString();  // TODO: add logging
-		GetSlideshowResponse response = this.restOperations.getForObject(url, GetSlideshowResponse.class);
-		response.setRequestType(GetSlideshowResponse.RequestType.BY_USER);
+		GetSlideshowsResponse response = this.restOperations.getForObject(url, GetSlideshowsResponse.class);
+		response.setRequestType(GetSlideshowsResponse.RequestType.BY_USER);
 
 		return response;
 	}

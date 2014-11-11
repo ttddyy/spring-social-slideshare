@@ -3,7 +3,7 @@ package org.springframework.social.slideshare.api.impl.xml;
 import org.junit.Test;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.social.slideshare.api.domain.GetSlideshowResponse;
+import org.springframework.social.slideshare.api.domain.GetSlideshowsResponse;
 import org.springframework.social.slideshare.api.domain.Slideshow;
 
 import static org.hamcrest.Matchers.*;
@@ -17,7 +17,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 /**
  * @author Tadaya Tsuyukubo
  */
-public class GetSlideshowResponseMappingTest extends AbstractSlideshareTemplateTest {
+public class GetSlideshowsResponseMappingTest extends AbstractSlideshareTemplateTest {
 
 	@Test
 	public void getSlideshowByTag() throws Exception {
@@ -29,9 +29,9 @@ public class GetSlideshowResponseMappingTest extends AbstractSlideshareTemplateT
 		;
 
 
-		GetSlideshowResponse response = slideshowOperations.getSlideshowsByTag("tag", 0, 0, false);
+		GetSlideshowsResponse response = slideshowOperations.getSlideshowsByTag("tag", 0, 0, false);
 
-		assertThat(response.getRequestType(), is(GetSlideshowResponse.RequestType.BY_TAG));
+		assertThat(response.getRequestType(), is(GetSlideshowsResponse.RequestType.BY_TAG));
 		assertThat(response.getName(), is("slideshare"));
 		assertThat(response.getCount(), is(5678));
 
@@ -89,9 +89,9 @@ public class GetSlideshowResponseMappingTest extends AbstractSlideshareTemplateT
 		;
 
 
-		GetSlideshowResponse response = slideshowOperations.getSlideshowsByTag("tag", 0, 0, true);
+		GetSlideshowsResponse response = slideshowOperations.getSlideshowsByTag("tag", 0, 0, true);
 
-		assertThat(response.getRequestType(), is(GetSlideshowResponse.RequestType.BY_TAG));
+		assertThat(response.getRequestType(), is(GetSlideshowsResponse.RequestType.BY_TAG));
 		assertThat(response.getName(), is("slideshare"));
 		assertThat(response.getCount(), is(5678));
 

@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.deser.impl.CreatorCollector;
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
-import org.springframework.social.slideshare.api.domain.GetSlideshowResponse;
+import org.springframework.social.slideshare.api.domain.GetSlideshowsResponse;
 import org.springframework.social.slideshare.api.domain.Slideshow;
 import org.springframework.util.StringUtils;
 
@@ -40,7 +40,7 @@ public class JacksonUtils {
 				context.setMixInAnnotations(Slideshow.Tag.class, SlideshowMixIn.TagMixin.class);
 				context.setMixInAnnotations(Slideshow.RelatedSlideshow.class, SlideshowMixIn.RelatedSlideshowMixin.class);
 
-				context.setMixInAnnotations(GetSlideshowResponse.class, GetSlideshowResponseMixin.class);
+				context.setMixInAnnotations(GetSlideshowsResponse.class, GetSlideshowsResponseMixin.class);
 			}
 		});
 
