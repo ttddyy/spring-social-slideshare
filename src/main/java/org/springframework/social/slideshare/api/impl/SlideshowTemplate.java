@@ -90,4 +90,35 @@ public class SlideshowTemplate implements SlideshowOperations {
 
 		return response;
 	}
+
+	public GetSlideshowResponse getSlideshowsByUser(String usernameFor, String username, String password,
+													int limit, int offset, boolean detailed, boolean getUnconverted) {
+
+		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_SLIDESHOW_BY_USER_URL);
+
+		builder.queryParam("username_for", usernameFor);
+		builder.queryParam("limit", limit);  // optional in api, but not specifying limit returns 0 result.
+		if (StringUtils.hasLength(username)) {
+			builder.queryParam("username", username);
+		}
+		if (StringUtils.hasLength(password)) {
+			builder.queryParam("password", password);
+		}
+		if (offset > 0) {
+			builder.queryParam("offset", offset);
+		}
+		if (detailed) {
+			// when detailed==true, add "detailed" parameter
+			builder.queryParam("detailed", 1);
+		}
+		if (getUnconverted) {
+			builder.queryParam("get_unconverted", 1);
+		}
+
+		String url = builder.toUriString();
+		GetSlideshowResponse response = this.restOperations.getForObject(url, GetSlideshowResponse.class);
+		response.setRequestType(GetSlideshowResponse.RequestType.BY_USER);
+
+		return response;
+	}
 }
