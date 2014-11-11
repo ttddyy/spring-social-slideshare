@@ -123,4 +123,7 @@ public class SlideShareTemplate implements SlideShare {
 
 	}
 
+	public RestTemplate getRestTemplate() {
+		return restTemplate;
+	}
 }
