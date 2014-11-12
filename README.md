@@ -41,6 +41,11 @@ ping me at [@ttddyy](https://twitter.com/ttddyy) if you want to contact me. :)
 
 ## Outside of Spring
 
+```java
+  SlideShare slideShare = new SlideShareTemplate("api_key", "shared_secret");
+  SlideshowOperations slideshowOperations = slideShare.slideshowOperations();
+  Slideshow slideshow = slideshowOperations.getSlideshow("0123456", ...);
+```
 
 # development
 
