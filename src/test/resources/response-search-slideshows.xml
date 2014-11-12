@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Slideshows>
+    <Meta>
+        <Query>MY_QUERY</Query>
+        <ResultOffset>9</ResultOffset>
+        <NumResults>99</NumResults>
+        <TotalResults>999</TotalResults>
+    </Meta>
+    <Slideshow>
+    </Slideshow>
+</Slideshows>
