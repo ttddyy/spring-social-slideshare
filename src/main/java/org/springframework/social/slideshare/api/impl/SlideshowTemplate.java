@@ -1,13 +1,19 @@
 package org.springframework.social.slideshare.api.impl;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.http.HttpMethod;
 import org.springframework.social.slideshare.api.SlideshowOperations;
 import org.springframework.social.slideshare.api.domain.GetSlideshowsResponse;
 import org.springframework.social.slideshare.api.domain.SearchOptions;
 import org.springframework.social.slideshare.api.domain.SearchSlideshowsResponse;
 import org.springframework.social.slideshare.api.domain.Slideshow;
+import org.springframework.social.slideshare.api.impl.xml.SlideshowIdHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.Collection;
 
 
 /**
@@ -20,6 +26,9 @@ public class SlideshowTemplate implements SlideshowOperations {
 	public static final String GET_SLIDESHOWS_BY_GROUP_URL = BASE_URL + "/get_slideshows_by_group";
 	public static final String GET_SLIDESHOWS_BY_USER_URL = BASE_URL + "/get_slideshows_by_user";
 	public static final String SEARCH_SLIDESHOWS_URL = BASE_URL + "/search_slideshows";
+	public static final String EDIT_SLIDESHOW_URL = BASE_URL + "/edit_slideshow";
+
+	private static Log logger = LogFactory.getLog(SlideshowTemplate.class);
 
 	private final RestOperations restOperations;
 
@@ -50,6 +59,8 @@ public class SlideshowTemplate implements SlideshowOperations {
 		builder.queryParam("detailed", detailed ? "1" : "0");
 
 		String url = builder.toUriString();
+		logger.debug("requesting SlideShare API: " + url);
+
 		Slideshow slideshow = this.restOperations.getForObject(url, Slideshow.class);
 		return slideshow;
 	}
@@ -68,6 +79,8 @@ public class SlideshowTemplate implements SlideshowOperations {
 		}
 
 		String url = builder.toUriString();
+		logger.debug("requesting SlideShare API: " + url);
+
 		GetSlideshowsResponse response = this.restOperations.getForObject(url, GetSlideshowsResponse.class);
 		response.setRequestType(GetSlideshowsResponse.RequestType.BY_TAG);
 
@@ -88,6 +101,8 @@ public class SlideshowTemplate implements SlideshowOperations {
 		}
 
 		String url = builder.toUriString();
+		logger.debug("requesting SlideShare API: " + url);
+
 		GetSlideshowsResponse response = this.restOperations.getForObject(url, GetSlideshowsResponse.class);
 		response.setRequestType(GetSlideshowsResponse.RequestType.BY_GROUP);
 
@@ -118,7 +133,9 @@ public class SlideshowTemplate implements SlideshowOperations {
 			builder.queryParam("get_unconverted", 1);
 		}
 
-		String url = builder.toUriString();  // TODO: add logging
+		String url = builder.toUriString();
+		logger.debug("requesting SlideShare API: " + url);
+
 		GetSlideshowsResponse response = this.restOperations.getForObject(url, GetSlideshowsResponse.class);
 		response.setRequestType(GetSlideshowsResponse.RequestType.BY_USER);
 
@@ -176,8 +193,50 @@ public class SlideshowTemplate implements SlideshowOperations {
 		}
 
 
-		String url = builder.toUriString();  // TODO: add logging
+		String url = builder.toUriString();
+		logger.debug("requesting SlideShare API: " + url);
+
 		SearchSlideshowsResponse response = this.restOperations.getForObject(url, SearchSlideshowsResponse.class);
 		return response;
+	}
+
+	public String editSlideshow(String username, String password, String slideshowId, String slideshowTitle,
+								String slideshowDescription, Collection<String> slideshowTags, boolean makeSlideshowPrivate,
+								boolean generateSecretUrl, boolean allowEmbeds, boolean shareWithContacts) {
+		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(EDIT_SLIDESHOW_URL);
+
+		builder.queryParam("username", username);
+		builder.queryParam("password", password);
+		builder.queryParam("slideshow_id", slideshowId);
+
+		if (StringUtils.hasLength(slideshowTitle)) {
+			builder.queryParam("slideshow_title", slideshowTitle);
+		}
+		if (StringUtils.hasLength(slideshowDescription)) {
+			builder.queryParam("slideshow_description", slideshowDescription);
+		}
+		if (slideshowTags != null) {
+			builder.queryParam("slideshow_tags", StringUtils.collectionToCommaDelimitedString(slideshowTags));
+		}
+
+		if (makeSlideshowPrivate) {
+			builder.queryParam("make_slideshow_private", "Y");
+
+			if (generateSecretUrl) {
+				builder.queryParam("generate_secret_url", "Y");
+			}
+			if (allowEmbeds) {
+				builder.queryParam("allow_embeds", "Y");
+			}
+			if (shareWithContacts) {
+				builder.queryParam("share_with_contacts", "Y");
+			}
+		}
+
+		String url = builder.toUriString();
+		logger.debug("requesting SlideShare API: " + url);
+
+		SlideshowIdHolder response = this.restOperations.getForObject(url, SlideshowIdHolder.class);
+		return response.getId();
 	}
 }
