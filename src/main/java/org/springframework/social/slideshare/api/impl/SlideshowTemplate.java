@@ -2,7 +2,6 @@ package org.springframework.social.slideshare.api.impl;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.http.HttpMethod;
 import org.springframework.social.slideshare.api.SlideshowOperations;
 import org.springframework.social.slideshare.api.domain.GetSlideshowsResponse;
 import org.springframework.social.slideshare.api.domain.SearchOptions;
@@ -200,6 +199,8 @@ public class SlideshowTemplate implements SlideshowOperations {
 		return response;
 	}
 
+	// TODO: makeSlideshowPrivate, generateSecretUrl, allowEmbeds, shareWithContacts => Privacy settings (edit & upload)
+
 	public String editSlideshow(String username, String password, String slideshowId, String slideshowTitle,
 								String slideshowDescription, Collection<String> slideshowTags, boolean makeSlideshowPrivate,
 								boolean generateSecretUrl, boolean allowEmbeds, boolean shareWithContacts) {
@@ -239,4 +240,7 @@ public class SlideshowTemplate implements SlideshowOperations {
 		SlideshowIdHolder response = this.restOperations.getForObject(url, SlideshowIdHolder.class);
 		return response.getId();
 	}
+
+	// delete_slideshow
+	// upload_slideshow
 }
