@@ -28,4 +28,10 @@ public interface SlideshowOperations {
 						 boolean generateSecretUrl, boolean allowEmbeds, boolean shareWithContacts);
 
 	String deleteSlideshow(String username, String password, String slideshowId);
+
+	String uploadSlideshow(String username, String password, String uploadUrl, String slideshowTitle,
+						   String slideshowDescription, Collection<String> slideshowTags, boolean makeSrcPublic,
+						   boolean makeSlideshowPrivate, boolean generateSecretUrl, boolean allowEmbeds,
+						   boolean shareWithContacts);
+
 }

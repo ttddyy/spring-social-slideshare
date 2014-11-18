@@ -27,6 +27,7 @@ public class SlideshowTemplate implements SlideshowOperations {
 	public static final String SEARCH_SLIDESHOWS_URL = BASE_URL + "/search_slideshows";
 	public static final String EDIT_SLIDESHOW_URL = BASE_URL + "/edit_slideshow";
 	public static final String DELETE_SLIDESHOW_URL = BASE_URL + "/delete_slideshow";
+	public static final String UPLOAD_SLIDESHOW_URL = BASE_URL + "/upload_slideshow";
 
 	private static Log logger = LogFactory.getLog(SlideshowTemplate.class);
 
@@ -257,5 +258,86 @@ public class SlideshowTemplate implements SlideshowOperations {
 		return response.getId();
 	}
 
-// upload_slideshow
+	public String uploadSlideshow(String username, String password, String uploadUrl, String slideshowTitle,
+								  String slideshowDescription, Collection<String> slideshowTags, boolean makeSrcPublic,
+								  boolean makeSlideshowPrivate, boolean generateSecretUrl, boolean allowEmbeds,
+								  boolean shareWithContacts) {
+		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(UPLOAD_SLIDESHOW_URL);
+
+		// required params
+		builder.queryParam("username", username);
+		builder.queryParam("password", password);
+		builder.queryParam("upload_url", uploadUrl);
+		builder.queryParam("slideshow_title", slideshowTitle);
+
+		// optional params
+		populateSlideshowUploadOptionalParameters(
+				builder, slideshowDescription, slideshowTags, makeSrcPublic, makeSlideshowPrivate,
+				generateSecretUrl, allowEmbeds, shareWithContacts);
+
+		String url = builder.toUriString();
+		logger.debug("requesting SlideShare API: " + url);
+
+		SlideshowIdHolder response = this.restOperations.getForObject(url, SlideshowIdHolder.class);
+		return response.getId();
+	}
+
+/*  TODO: implement this
+
+	// Need extra permission. If you want to upload a file using SlideShare API, please send an email to
+	// api@slideshare.com with your developer account username describing the use case.
+	public String uploadSlideshowContent(String username, String password, String slideshowTitle, String slideshowContent,
+										 String slideshowDescription, Collection<String> slideshowTags, boolean makeSrcPublic,
+										 boolean makeSlideshowPrivate, boolean generateSecretUrl, boolean allowEmbeds,
+										 boolean shareWithContacts) {
+		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(EDIT_SLIDESHOW_URL);
+
+		// required params
+		builder.queryParam("username", username);
+		builder.queryParam("password", password);
+		builder.queryParam("slideshow_srcfile", slideshowContent);
+
+		// optional params
+		populateSlideshowUploadOptionalParameters(
+				builder, slideshowDescription, slideshowTags, makeSrcPublic, makeSlideshowPrivate,
+				generateSecretUrl, allowEmbeds, shareWithContacts);
+
+		String url = builder.toUriString();
+		logger.debug("requesting SlideShare API: " + url);
+
+		// needs to be POST
+		SlideshowIdHolder response = this.restOperations.postForObject(url, SlideshowIdHolder.class);
+		return response.getId();
+	}
+*/
+
+	private void populateSlideshowUploadOptionalParameters(UriComponentsBuilder builder, String slideshowDescription, Collection<String> slideshowTags, boolean makeSrcPublic,
+														   boolean makeSlideshowPrivate, boolean generateSecretUrl, boolean allowEmbeds,
+														   boolean shareWithContacts) {
+		// optional params
+		if (StringUtils.hasLength(slideshowDescription)) {
+			builder.queryParam("slideshow_description", slideshowDescription);
+		}
+		if (slideshowTags != null) {
+			builder.queryParam("slideshow_tags", StringUtils.collectionToCommaDelimitedString(slideshowTags));
+		}
+		if (!makeSrcPublic) {
+			builder.queryParam("make_src_public", "N");  // default is Y
+		}
+
+		if (makeSlideshowPrivate) {
+			builder.queryParam("make_slideshow_private", "Y");
+
+			if (generateSecretUrl) {
+				builder.queryParam("generate_secret_url", "Y");
+			}
+			if (allowEmbeds) {
+				builder.queryParam("allow_embeds", "Y");
+			}
+			if (shareWithContacts) {
+				builder.queryParam("share_with_contacts", "Y");
+			}
+		}
+	}
+
 }
