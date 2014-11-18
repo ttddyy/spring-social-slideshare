@@ -27,4 +27,5 @@ public interface SlideshowOperations {
 						 String slideshowDescription, Collection<String> slideshowTags, boolean makeSlideshowPrivate,
 						 boolean generateSecretUrl, boolean allowEmbeds, boolean shareWithContacts);
 
+	String deleteSlideshow(String username, String password, String slideshowId);
 }

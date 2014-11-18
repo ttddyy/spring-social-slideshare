@@ -26,6 +26,7 @@ public class SlideshowTemplate implements SlideshowOperations {
 	public static final String GET_SLIDESHOWS_BY_USER_URL = BASE_URL + "/get_slideshows_by_user";
 	public static final String SEARCH_SLIDESHOWS_URL = BASE_URL + "/search_slideshows";
 	public static final String EDIT_SLIDESHOW_URL = BASE_URL + "/edit_slideshow";
+	public static final String DELETE_SLIDESHOW_URL = BASE_URL + "/delete_slideshow";
 
 	private static Log logger = LogFactory.getLog(SlideshowTemplate.class);
 
@@ -241,6 +242,20 @@ public class SlideshowTemplate implements SlideshowOperations {
 		return response.getId();
 	}
 
-	// delete_slideshow
-	// upload_slideshow
+	@Override
+	public String deleteSlideshow(String username, String password, String slideshowId) {
+		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(DELETE_SLIDESHOW_URL);
+
+		builder.queryParam("username", username);
+		builder.queryParam("password", password);
+		builder.queryParam("slideshow_id", slideshowId);
+
+		String url = builder.toUriString();
+		logger.debug("requesting SlideShare API: " + url);
+
+		SlideshowIdHolder response = this.restOperations.getForObject(url, SlideshowIdHolder.class);
+		return response.getId();
+	}
+
+// upload_slideshow
 }
