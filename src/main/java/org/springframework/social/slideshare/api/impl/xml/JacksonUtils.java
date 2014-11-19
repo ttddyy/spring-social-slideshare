@@ -46,6 +46,10 @@ public class JacksonUtils {
 				context.setMixInAnnotations(SearchSlideshowsResponse.MetaInfo.class, SearchSlideshowsResponseMixin.MetaInfoMixin.class);
 
 				context.setMixInAnnotations(SlideshowIdHolder.class, SlideshowIdHolderMixin.class);
+
+				// errors
+				context.setMixInAnnotations(SlideShareServiceError.class, SlideShareServiceErrorMixin.class);
+				context.setMixInAnnotations(SlideShareServiceError.Message.class, SlideShareServiceErrorMixin.MessageMixin.class);
 			}
 		});
 
