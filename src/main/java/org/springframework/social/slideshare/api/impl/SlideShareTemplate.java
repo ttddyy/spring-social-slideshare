@@ -3,6 +3,7 @@ package org.springframework.social.slideshare.api.impl;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
+import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -55,9 +56,15 @@ public class SlideShareTemplate implements SlideShare {
 	}
 
 	private RestTemplate createRestTemplateWithCulledMessageConverters() {
+
+		// need to buffer the response in order to check the response was error or not.
+		// http status is always 200 but returned xml is error xml.
+		ClientHttpRequestFactory requestFactory = ClientHttpRequestFactorySelector.getRequestFactory();
+		ClientHttpRequestFactory bufferedRequestFactory = ClientHttpRequestFactorySelector.bufferRequests(requestFactory);
+
 		List<HttpMessageConverter<?>> messageConverters = getMessageConverters();
 		RestTemplate client = new RestTemplate(messageConverters);
-		client.setRequestFactory(ClientHttpRequestFactorySelector.getRequestFactory());
+		client.setRequestFactory(bufferedRequestFactory);
 		return client;
 	}
 
