@@ -1,8 +1,8 @@
 package org.springframework.social.slideshare.api.impl.xml;
 
-import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.junit.Test;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -17,14 +17,11 @@ public class SlideShareServiceErrorMappingTest extends AbstractSlideshareTemplat
 	@Test
 	public void mapping() throws Exception {
 
-		XmlMapper xmlMapper = new XmlMapper(new JacksonXmlModule() {
-			@Override
-			public void setupModule(SetupContext context) {
-				super.setupModule(context);
-				context.setMixInAnnotations(SlideShareServiceError.class, SlideShareServiceErrorMixin.class);
-				context.setMixInAnnotations(SlideShareServiceError.Message.class, SlideShareServiceErrorMixin.MessageMixin.class);
-			}
-		});
+		XmlMapper xmlMapper = new Jackson2ObjectMapperBuilder()
+				.mixIn(SlideShareServiceError.class, SlideShareServiceErrorMixin.class)
+				.mixIn(SlideShareServiceError.Message.class, SlideShareServiceErrorMixin.MessageMixin.class)
+				.createXmlMapper(true)
+				.build();
 
 		SlideShareServiceError result = xmlMapper.readValue(readFile("response-error.xml"), SlideShareServiceError.class);
 

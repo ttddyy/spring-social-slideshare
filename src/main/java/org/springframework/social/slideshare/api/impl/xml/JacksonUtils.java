@@ -6,7 +6,6 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.deser.ValueInstantiator;
 import com.fasterxml.jackson.databind.deser.impl.CreatorCollector;
-import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.social.slideshare.api.domain.GetSlideshowsResponse;
@@ -16,8 +15,6 @@ import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Tadaya Tsuyukubo
@@ -32,29 +29,21 @@ public class JacksonUtils {
 	}
 
 	private static XmlMapper createXmlMapper() {
-		List<Module> modules = new ArrayList<>();
-		modules.add(new JacksonXmlModule() {
-			@Override
-			public void setupModule(SetupContext context) {
-				super.setupModule(context);
-				context.setMixInAnnotations(Slideshow.class, SlideshowMixIn.class);
-				context.setMixInAnnotations(Slideshow.Tag.class, SlideshowMixIn.TagMixin.class);
-				context.setMixInAnnotations(Slideshow.RelatedSlideshow.class, SlideshowMixIn.RelatedSlideshowMixin.class);
+		return new Jackson2ObjectMapperBuilder()
+				// mixins
+				.mixIn(Slideshow.class, SlideshowMixIn.class)
+				.mixIn(Slideshow.Tag.class, SlideshowMixIn.TagMixin.class)
+				.mixIn(Slideshow.RelatedSlideshow.class, SlideshowMixIn.RelatedSlideshowMixin.class)
 
-				context.setMixInAnnotations(GetSlideshowsResponse.class, GetSlideshowsResponseMixin.class);
-				context.setMixInAnnotations(SearchSlideshowsResponse.class, SearchSlideshowsResponseMixin.class);
-				context.setMixInAnnotations(SearchSlideshowsResponse.MetaInfo.class, SearchSlideshowsResponseMixin.MetaInfoMixin.class);
-
-				context.setMixInAnnotations(SlideshowIdHolder.class, SlideshowIdHolderMixin.class);
+				.mixIn(GetSlideshowsResponse.class, GetSlideshowsResponseMixin.class)
+				.mixIn(SearchSlideshowsResponse.class, SearchSlideshowsResponseMixin.class)
+				.mixIn(SearchSlideshowsResponse.MetaInfo.class, SearchSlideshowsResponseMixin.MetaInfoMixin.class)
+				.mixIn(SlideshowIdHolder.class, SlideshowIdHolderMixin.class)
 
 				// errors
-				context.setMixInAnnotations(SlideShareServiceError.class, SlideShareServiceErrorMixin.class);
-				context.setMixInAnnotations(SlideShareServiceError.Message.class, SlideShareServiceErrorMixin.MessageMixin.class);
-			}
-		});
+				.mixIn(SlideShareServiceError.class, SlideShareServiceErrorMixin.class)
+				.mixIn(SlideShareServiceError.Message.class, SlideShareServiceErrorMixin.MessageMixin.class)
 
-		return new Jackson2ObjectMapperBuilder()
-				.modules(modules)
 				.dateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss zzz"))
 //				.featuresToEnable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT)  // TODO: filter null element in collection
 //				.featuresToEnable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
