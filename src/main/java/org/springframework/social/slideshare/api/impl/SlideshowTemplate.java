@@ -39,7 +39,7 @@ public class SlideshowTemplate implements SlideshowOperations {
 
 	public Slideshow getSlideshow(String slideshowId, String slideshowUrl, String username, String password, boolean excludeTags, boolean detailed) {
 		if (StringUtils.isEmpty(slideshowId) && StringUtils.isEmpty(slideshowUrl)) {
-			throw new SlideShareException("slideshowId and slideshowUrl are empty");
+			throw new SlideShareException("slideshow", "slideshowId and slideshowUrl are empty");
 		}
 
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_SLIDESHOW_URL);

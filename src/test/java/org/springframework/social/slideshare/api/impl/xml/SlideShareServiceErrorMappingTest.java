@@ -8,8 +8,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.social.slideshare.api.impl.xml.TestUtils.readFile;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
-import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
 /**
  * @author Tadaya Tsuyukubo
@@ -34,6 +32,8 @@ public class SlideShareServiceErrorMappingTest extends AbstractSlideshareTemplat
 		assertThat(result.getMessage(), is(notNullValue()));
 		assertThat(result.getMessage().getId(), is(0));
 		assertThat(result.getMessage().getValue(), is("MY ERROR"));
+
+		assertThat(result.getErrorCode(), is(SlideShareServiceErrorCode.NO_API_KEY_PROVIDED));
 
 	}
 }

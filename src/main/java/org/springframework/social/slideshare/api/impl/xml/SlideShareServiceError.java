@@ -29,6 +29,13 @@ public class SlideShareServiceError {
 		}
 	}
 
+	public SlideShareServiceErrorCode getErrorCode() {
+		if (this.message != null) {
+			return SlideShareServiceErrorCode.valueOf(this.message.getId());
+		}
+		return null;
+	}
+
 	private Message message;
 
 	public Message getMessage() {
