@@ -51,4 +51,9 @@ public enum SlideShareServiceErrorCode {
 		}
 		return UNKNOWN;
 	}
+
+	@Override
+	public String toString() {
+		return this.name() + "(" + this.code + ")";
+	}
 }

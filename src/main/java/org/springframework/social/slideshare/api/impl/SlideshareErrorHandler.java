@@ -4,6 +4,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.social.slideshare.api.impl.xml.JacksonUtils;
 import org.springframework.social.slideshare.api.impl.xml.SlideShareServiceError;
+import org.springframework.social.slideshare.api.impl.xml.SlideShareServiceErrorCode;
 import org.springframework.web.client.DefaultResponseErrorHandler;
 
 import java.io.IOException;
@@ -34,7 +35,8 @@ public class SlideshareErrorHandler extends DefaultResponseErrorHandler {
 
 		XmlMapper xmlMapper = JacksonUtils.XML_MAPPER;
 		SlideShareServiceError error = xmlMapper.readValue(response.getBody(), SlideShareServiceError.class);
-
-		throw new SlideShareServiceErrorException(error.getErrorCode(), "SlideShare API returned error response.");
+		SlideShareServiceErrorCode errorCode = error.getErrorCode();
+		String message = "SlideShare API returned error response: " + errorCode;
+		throw new SlideShareServiceErrorException(error.getErrorCode(), message);
 	}
 }
