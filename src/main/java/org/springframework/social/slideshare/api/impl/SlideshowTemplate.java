@@ -37,15 +37,45 @@ public class SlideshowTemplate implements SlideshowOperations {
 		this.restOperations = restOperations;
 	}
 
-//	TODO: get_transcript parameter
-//	public Slideshow getSlideshowById(String slideshowId);
-//	public Slideshow getSlideshowById(String slideshowId, String username, String password);
-//  public Slideshow getSlideshowById(String slideshowId, String username, String password, boolean excludeTags, boolean detailed);
-//	public Slideshow getSlideshowByUrl(String slideshowUrl);
-//	public Slideshow getSlideshowByUrl(String slideshowUrl, String username, String password);
-//  public Slideshow getSlideshowByUrl(String slideshowUrl, String username, String password, boolean excludeTags, boolean detailed);
-//	public Slideshow getSlideshow(String slideshowId, String slideshowUrl);
-//	public Slideshow getSlideshow(String slideshowId, String slideshowUrl, String username, String password);
+	@Override
+	public Slideshow getSlideshowById(String slideshowId) {
+		return getSlideshow(slideshowId, null, null, null, false, true, true);  // get maximum info
+	}
+
+	@Override
+	public Slideshow getSlideshowById(String slideshowId, String username, String password) {
+		return getSlideshow(slideshowId, null, username, password, false, true, true);  // get maximum info
+	}
+
+	@Override
+	public Slideshow getSlideshowById(String slideshowId, String username, String password, boolean excludeTags, boolean detailed, boolean transcript) {
+		return getSlideshow(slideshowId, null, username, password, excludeTags, detailed, transcript);
+	}
+
+	@Override
+	public Slideshow getSlideshowByUrl(String slideshowUrl) {
+		return getSlideshow(null, slideshowUrl, null, null, false, true, true);  // get maximum info
+	}
+
+	@Override
+	public Slideshow getSlideshowByUrl(String slideshowUrl, String username, String password) {
+		return getSlideshow(null, slideshowUrl, username, password, false, true, true);  // get maximum info
+	}
+
+	@Override
+	public Slideshow getSlideshowByUrl(String slideshowUrl, String username, String password, boolean excludeTags, boolean detailed, boolean transcript) {
+		return getSlideshow(null, slideshowUrl, username, password, excludeTags, detailed, transcript);
+	}
+
+	@Override
+	public Slideshow getSlideshow(String slideshowId, String slideshowUrl) {
+		return getSlideshow(slideshowId, slideshowUrl, null, null, false, true, true);  // get maximum info
+	}
+
+	@Override
+	public Slideshow getSlideshow(String slideshowId, String slideshowUrl, String username, String password) {
+		return getSlideshow(slideshowId, slideshowUrl, username, password, false, true, true);  // get maximum info
+	}
 
 	@Override
 	public Slideshow getSlideshow(String slideshowId, String slideshowUrl, String username, String password,

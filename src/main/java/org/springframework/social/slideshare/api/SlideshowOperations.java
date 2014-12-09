@@ -13,6 +13,22 @@ import java.util.Collection;
 public interface SlideshowOperations {
 
 	// TODO: javadoc
+	Slideshow getSlideshowById(String slideshowId);
+
+	Slideshow getSlideshowById(String slideshowId, String username, String password);
+
+	Slideshow getSlideshowById(String slideshowId, String username, String password, boolean excludeTags, boolean detailed, boolean transcript);
+
+	Slideshow getSlideshowByUrl(String slideshowUrl);
+
+	Slideshow getSlideshowByUrl(String slideshowUrl, String username, String password);
+
+	Slideshow getSlideshowByUrl(String slideshowUrl, String username, String password, boolean excludeTags, boolean detailed, boolean transcript);
+
+	Slideshow getSlideshow(String slideshowId, String slideshowUrl);
+
+	Slideshow getSlideshow(String slideshowId, String slideshowUrl, String username, String password);
+
 	Slideshow getSlideshow(String slideshowId, String slideshowUrl, String username, String password, boolean excludeTags, boolean detailed, boolean transcript);
 
 
