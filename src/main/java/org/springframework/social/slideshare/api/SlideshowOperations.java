@@ -12,8 +12,9 @@ import java.util.Collection;
  */
 public interface SlideshowOperations {
 
-	// TODO: write convenient methods which have less parameters for getSlideshow()
-	Slideshow getSlideshow(String slideshowId, String slideshowUrl, String username, String password, boolean excludeTags, boolean detailed);
+	// TODO: javadoc
+	Slideshow getSlideshow(String slideshowId, String slideshowUrl, String username, String password, boolean excludeTags, boolean detailed, boolean transcript);
+
 
 	GetSlideshowsResponse getSlideshowsByTag(String tag, int limit, int offset, boolean detailed);
 

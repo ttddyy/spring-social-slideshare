@@ -38,10 +38,18 @@ public class SlideshowTemplate implements SlideshowOperations {
 	}
 
 //	TODO: get_transcript parameter
-//	public Slideshow getSlideshow(String slideshowId, String slideshowUrl)
-//	public Slideshow getSlideshow(String slideshowId, String slideshowUrl, String username, String password) {
+//	public Slideshow getSlideshowById(String slideshowId);
+//	public Slideshow getSlideshowById(String slideshowId, String username, String password);
+//  public Slideshow getSlideshowById(String slideshowId, String username, String password, boolean excludeTags, boolean detailed);
+//	public Slideshow getSlideshowByUrl(String slideshowUrl);
+//	public Slideshow getSlideshowByUrl(String slideshowUrl, String username, String password);
+//  public Slideshow getSlideshowByUrl(String slideshowUrl, String username, String password, boolean excludeTags, boolean detailed);
+//	public Slideshow getSlideshow(String slideshowId, String slideshowUrl);
+//	public Slideshow getSlideshow(String slideshowId, String slideshowUrl, String username, String password);
 
-	public Slideshow getSlideshow(String slideshowId, String slideshowUrl, String username, String password, boolean excludeTags, boolean detailed) {
+	@Override
+	public Slideshow getSlideshow(String slideshowId, String slideshowUrl, String username, String password,
+								  boolean excludeTags, boolean detailed, boolean transcript) {
 		if (StringUtils.isEmpty(slideshowId) && StringUtils.isEmpty(slideshowUrl)) {
 			throw new SlideShareException("slideshow", "slideshowId and slideshowUrl are empty");
 		}
@@ -62,6 +70,7 @@ public class SlideshowTemplate implements SlideshowOperations {
 		}
 		builder.queryParam("exclude_tags", excludeTags ? "1" : "0");
 		builder.queryParam("detailed", detailed ? "1" : "0");
+		builder.queryParam("get_transcript", transcript ? "1" : "0");
 
 		String url = builder.toUriString();
 		logger.debug("requesting SlideShare API: " + url);

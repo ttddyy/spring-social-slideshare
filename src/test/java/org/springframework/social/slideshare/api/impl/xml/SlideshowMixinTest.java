@@ -27,7 +27,7 @@ public class SlideshowMixinTest extends AbstractSlideshareTemplateTest {
 				.andRespond(withSuccess(readFile("response-get-slideshow.xml"), MediaType.APPLICATION_XML))
 		;
 
-		Slideshow slideshow = slideshowOperations.getSlideshow("id", "url", "user", "pass", true, true);
+		Slideshow slideshow = slideshowOperations.getSlideshow("id", "url", "user", "pass", true, true, true);
 
 		assertThat(slideshow.getId(), is("13343768"));
 		assertThat(slideshow.getTitle(), is("MY_TITLE"));
