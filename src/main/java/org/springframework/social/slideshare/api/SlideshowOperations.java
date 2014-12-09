@@ -24,14 +24,14 @@ public interface SlideshowOperations {
 			boolean isCCCommercial, boolean detailed, boolean getTranscript);
 
 	String editSlideshow(String username, String password, String slideshowId, String slideshowTitle,
-						 String slideshowDescription, Collection<String> slideshowTags, boolean makeSlideshowPrivate,
-						 boolean generateSecretUrl, boolean allowEmbeds, boolean shareWithContacts);
+						 String slideshowDescription, Collection<String> slideshowTags, Boolean makeSlideshowPrivate,
+						 Boolean generateSecretUrl, Boolean allowEmbeds, Boolean shareWithContacts);
 
 	String deleteSlideshow(String username, String password, String slideshowId);
 
 	String uploadSlideshow(String username, String password, String uploadUrl, String slideshowTitle,
-						   String slideshowDescription, Collection<String> slideshowTags, boolean makeSrcPublic,
-						   boolean makeSlideshowPrivate, boolean generateSecretUrl, boolean allowEmbeds,
-						   boolean shareWithContacts);
+						   String slideshowDescription, Collection<String> slideshowTags, Boolean makeSrcPublic,
+						   Boolean makeSlideshowPrivate, Boolean generateSecretUrl, Boolean allowEmbeds,
+						   Boolean shareWithContacts);
 
 }

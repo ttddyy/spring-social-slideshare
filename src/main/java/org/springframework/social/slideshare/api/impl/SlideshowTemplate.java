@@ -37,6 +37,10 @@ public class SlideshowTemplate implements SlideshowOperations {
 		this.restOperations = restOperations;
 	}
 
+//	TODO: get_transcript parameter
+//	public Slideshow getSlideshow(String slideshowId, String slideshowUrl)
+//	public Slideshow getSlideshow(String slideshowId, String slideshowUrl, String username, String password) {
+
 	public Slideshow getSlideshow(String slideshowId, String slideshowUrl, String username, String password, boolean excludeTags, boolean detailed) {
 		if (StringUtils.isEmpty(slideshowId) && StringUtils.isEmpty(slideshowUrl)) {
 			throw new SlideShareException("slideshow", "slideshowId and slideshowUrl are empty");
@@ -66,6 +70,7 @@ public class SlideshowTemplate implements SlideshowOperations {
 		return slideshow;
 	}
 
+	//	public GetSlideshowsResponse getSlideshowsByTag(String tag, int limit) => (tag, limit, 0, false)
 	public GetSlideshowsResponse getSlideshowsByTag(String tag, int limit, int offset, boolean detailed) {
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_SLIDESHOWS_BY_TAG_URL);
 
@@ -88,6 +93,7 @@ public class SlideshowTemplate implements SlideshowOperations {
 		return response;
 	}
 
+	//	public GetSlideshowsResponse getSlideshowsByGroup(String groupName, int limit) => (groupName, limit, 0, false)
 	public GetSlideshowsResponse getSlideshowsByGroup(String groupName, int limit, int offset, boolean detailed) {
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_SLIDESHOWS_BY_GROUP_URL);
 
@@ -110,6 +116,8 @@ public class SlideshowTemplate implements SlideshowOperations {
 		return response;
 	}
 
+	//	public GetSlideshowsResponse getSlideshowsByUser(String usernameFor, int limit) => (usernameFor, null, null, limit, 0, false, false)
+	//	public GetSlideshowsResponse getSlideshowsByUser(String usernameFor, String username, String password, int limit) => (usernameFor, username, password, limit, 0, false, false)
 	public GetSlideshowsResponse getSlideshowsByUser(String usernameFor, String username, String password,
 													 int limit, int offset, boolean detailed, boolean getUnconverted) {
 
@@ -144,6 +152,10 @@ public class SlideshowTemplate implements SlideshowOperations {
 	}
 
 	@Override
+//	public SearchSlideshowsResponse searchSlideshows(String q) => (q, 0)
+//	public SearchSlideshowsResponse searchSlideshows(String q, int page) => (q, page, 0)
+//	public SearchSlideshowsResponse searchSlideshows(String q, int page, int itemsPerPage) =>
+//			(q, page, itemsPerPage, null, null, null, null, false, null, null, false, false, false, false, false)
 	public SearchSlideshowsResponse searchSlideshows(
 			String q, int page, int itemsPerPage, SearchOptions.Language lang, SearchOptions.Sort sort,
 			SearchOptions.UploadDate uploadDate, SearchOptions.SearchType searchType, boolean downloadableOnly,
@@ -203,9 +215,12 @@ public class SlideshowTemplate implements SlideshowOperations {
 
 	// TODO: makeSlideshowPrivate, generateSecretUrl, allowEmbeds, shareWithContacts => Privacy settings (edit & upload)
 
+	//	required: username, password, slideshowId
+//	public String editSlideshow(String username, String password, String slideshowId, String slideshowTitle,
+//								String slideshowDescription, Collection<String> slideshowTags, PrivacySettings privacySettings) {
 	public String editSlideshow(String username, String password, String slideshowId, String slideshowTitle,
-								String slideshowDescription, Collection<String> slideshowTags, boolean makeSlideshowPrivate,
-								boolean generateSecretUrl, boolean allowEmbeds, boolean shareWithContacts) {
+								String slideshowDescription, Collection<String> slideshowTags, Boolean makeSlideshowPrivate,
+								Boolean generateSecretUrl, Boolean allowEmbeds, Boolean shareWithContacts) {
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(EDIT_SLIDESHOW_URL);
 
 		builder.queryParam("username", username);
@@ -222,25 +237,39 @@ public class SlideshowTemplate implements SlideshowOperations {
 			builder.queryParam("slideshow_tags", StringUtils.collectionToCommaDelimitedString(slideshowTags));
 		}
 
-		if (makeSlideshowPrivate) {
-			builder.queryParam("make_slideshow_private", "Y");
+		// privacy setings
+		setUpPrivacySettings(builder, makeSlideshowPrivate, generateSecretUrl, allowEmbeds, shareWithContacts);
 
-			if (generateSecretUrl) {
-				builder.queryParam("generate_secret_url", "Y");
-			}
-			if (allowEmbeds) {
-				builder.queryParam("allow_embeds", "Y");
-			}
-			if (shareWithContacts) {
-				builder.queryParam("share_with_contacts", "Y");
-			}
-		}
 
 		String url = builder.toUriString();
 		logger.debug("requesting SlideShare API: " + url);
 
 		SlideshowIdHolder response = this.restOperations.getForObject(url, SlideshowIdHolder.class);
 		return response.getId();
+	}
+
+	private void setUpPrivacySettings(UriComponentsBuilder builder, Boolean makeSlideshowPrivate,
+									  Boolean generateSecretUrl, Boolean allowEmbeds, Boolean shareWithContacts) {
+		if (makeSlideshowPrivate != null) {
+
+			if (makeSlideshowPrivate) {
+				builder.queryParam("make_slideshow_private", "Y");
+
+				if (generateSecretUrl != null) {
+					builder.queryParam("generate_secret_url", generateSecretUrl ? "Y" : "N");
+				}
+				if (allowEmbeds != null) {
+					builder.queryParam("allow_embeds", allowEmbeds ? "Y" : "N");
+				}
+				if (shareWithContacts != null) {
+					builder.queryParam("share_with_contacts", shareWithContacts ? "Y" : "N");
+				}
+			}
+			else {
+				builder.queryParam("make_slideshow_private", "N");
+			}
+
+		}
 	}
 
 	@Override
@@ -259,9 +288,9 @@ public class SlideshowTemplate implements SlideshowOperations {
 	}
 
 	public String uploadSlideshow(String username, String password, String uploadUrl, String slideshowTitle,
-								  String slideshowDescription, Collection<String> slideshowTags, boolean makeSrcPublic,
-								  boolean makeSlideshowPrivate, boolean generateSecretUrl, boolean allowEmbeds,
-								  boolean shareWithContacts) {
+								  String slideshowDescription, Collection<String> slideshowTags, Boolean makeSrcPublic,
+								  Boolean makeSlideshowPrivate, Boolean generateSecretUrl, Boolean allowEmbeds,
+								  Boolean shareWithContacts) {
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(UPLOAD_SLIDESHOW_URL);
 
 		// required params
@@ -288,8 +317,8 @@ public class SlideshowTemplate implements SlideshowOperations {
 	// api@slideshare.com with your developer account username describing the use case.
 	public String uploadSlideshowContent(String username, String password, String slideshowTitle, String slideshowContent,
 										 String slideshowDescription, Collection<String> slideshowTags, boolean makeSrcPublic,
-										 boolean makeSlideshowPrivate, boolean generateSecretUrl, boolean allowEmbeds,
-										 boolean shareWithContacts) {
+										 Boolean makeSlideshowPrivate, Boolean generateSecretUrl, Boolean allowEmbeds,
+										 Boolean shareWithContacts) {
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(EDIT_SLIDESHOW_URL);
 
 		// required params
@@ -311,9 +340,9 @@ public class SlideshowTemplate implements SlideshowOperations {
 	}
 */
 
-	private void populateSlideshowUploadOptionalParameters(UriComponentsBuilder builder, String slideshowDescription, Collection<String> slideshowTags, boolean makeSrcPublic,
-														   boolean makeSlideshowPrivate, boolean generateSecretUrl, boolean allowEmbeds,
-														   boolean shareWithContacts) {
+	private void populateSlideshowUploadOptionalParameters(UriComponentsBuilder builder, String slideshowDescription, Collection<String> slideshowTags, Boolean makeSrcPublic,
+														   Boolean makeSlideshowPrivate, Boolean generateSecretUrl, Boolean allowEmbeds,
+														   Boolean shareWithContacts) {
 		// optional params
 		if (StringUtils.hasLength(slideshowDescription)) {
 			builder.queryParam("slideshow_description", slideshowDescription);
@@ -321,23 +350,12 @@ public class SlideshowTemplate implements SlideshowOperations {
 		if (slideshowTags != null) {
 			builder.queryParam("slideshow_tags", StringUtils.collectionToCommaDelimitedString(slideshowTags));
 		}
-		if (!makeSrcPublic) {
-			builder.queryParam("make_src_public", "N");  // default is Y
+		if (makeSrcPublic != null) {
+			builder.queryParam("make_src_public", makeSrcPublic ? "Y" : "N");  // default is Y
 		}
 
-		if (makeSlideshowPrivate) {
-			builder.queryParam("make_slideshow_private", "Y");
-
-			if (generateSecretUrl) {
-				builder.queryParam("generate_secret_url", "Y");
-			}
-			if (allowEmbeds) {
-				builder.queryParam("allow_embeds", "Y");
-			}
-			if (shareWithContacts) {
-				builder.queryParam("share_with_contacts", "Y");
-			}
-		}
+		// privacy settings
+		setUpPrivacySettings(builder, makeSlideshowPrivate, generateSecretUrl, allowEmbeds, shareWithContacts);
 	}
 
 }
