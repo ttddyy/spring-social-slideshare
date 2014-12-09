@@ -109,7 +109,12 @@ public class SlideshowTemplate implements SlideshowOperations {
 		return slideshow;
 	}
 
-	//	public GetSlideshowsResponse getSlideshowsByTag(String tag, int limit) => (tag, limit, 0, false)
+	@Override
+	public GetSlideshowsResponse getSlideshowsByTag(String tag, int limit) {
+		return getSlideshowsByTag(tag, limit, 0, true);  // get maximum info
+	}
+
+	@Override
 	public GetSlideshowsResponse getSlideshowsByTag(String tag, int limit, int offset, boolean detailed) {
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_SLIDESHOWS_BY_TAG_URL);
 
@@ -132,7 +137,12 @@ public class SlideshowTemplate implements SlideshowOperations {
 		return response;
 	}
 
-	//	public GetSlideshowsResponse getSlideshowsByGroup(String groupName, int limit) => (groupName, limit, 0, false)
+	@Override
+	public GetSlideshowsResponse getSlideshowsByGroup(String groupName, int limit) {
+		return getSlideshowsByGroup(groupName, limit, 0, true);  // get maximum info
+	}
+
+	@Override
 	public GetSlideshowsResponse getSlideshowsByGroup(String groupName, int limit, int offset, boolean detailed) {
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(GET_SLIDESHOWS_BY_GROUP_URL);
 
@@ -155,8 +165,17 @@ public class SlideshowTemplate implements SlideshowOperations {
 		return response;
 	}
 
-	//	public GetSlideshowsResponse getSlideshowsByUser(String usernameFor, int limit) => (usernameFor, null, null, limit, 0, false, false)
-	//	public GetSlideshowsResponse getSlideshowsByUser(String usernameFor, String username, String password, int limit) => (usernameFor, username, password, limit, 0, false, false)
+	@Override
+	public GetSlideshowsResponse getSlideshowsByUser(String usernameFor, int limit) {
+		return getSlideshowsByUser(usernameFor, null, null, limit, 0, true, false);
+	}
+
+	@Override
+	public GetSlideshowsResponse getSlideshowsByUser(String usernameFor, String username, String password, int limit) {
+		return getSlideshowsByUser(usernameFor, username, password, limit, 0, true, false);
+	}
+
+	@Override
 	public GetSlideshowsResponse getSlideshowsByUser(String usernameFor, String username, String password,
 													 int limit, int offset, boolean detailed, boolean getUnconverted) {
 

@@ -32,7 +32,23 @@ public interface SlideshowOperations {
 	Slideshow getSlideshow(String slideshowId, String slideshowUrl, String username, String password, boolean excludeTags, boolean detailed, boolean transcript);
 
 
+	GetSlideshowsResponse getSlideshowsByTag(String tag, int limit);
+
 	GetSlideshowsResponse getSlideshowsByTag(String tag, int limit, int offset, boolean detailed);
+
+
+	GetSlideshowsResponse getSlideshowsByGroup(String groupName, int limit);
+
+	GetSlideshowsResponse getSlideshowsByGroup(String groupName, int limit, int offset, boolean detailed);
+
+
+	GetSlideshowsResponse getSlideshowsByUser(String usernameFor, int limit);
+
+	GetSlideshowsResponse getSlideshowsByUser(String usernameFor, String username, String password, int limit);
+
+	GetSlideshowsResponse getSlideshowsByUser(String usernameFor, String username, String password,
+											  int limit, int offset, boolean detailed, boolean getUnconverted);
+
 
 	SearchSlideshowsResponse searchSlideshows(
 			String q, int page, int itemsPerPage, SearchOptions.Language lang, SearchOptions.Sort sort,
