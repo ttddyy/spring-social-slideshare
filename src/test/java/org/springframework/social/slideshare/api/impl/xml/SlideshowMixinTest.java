@@ -47,6 +47,7 @@ public class SlideshowMixinTest extends AbstractSlideshareTemplateTest {
 		assertThat(slideshow.getDownloadUrl(), is("MY_DOWNLOAD_URL"));
 		assertThat(slideshow.getSlideshowType(), is(Slideshow.SlideshowType.PRESENTATION));
 		assertThat(slideshow.isInContest(), is(false));
+		assertThat(slideshow.getTranscript(), is("MY_TRANSCRIPT"));
 		assertThat(slideshow.getUserId(), is("25500108"));
 		assertThat(slideshow.getExternalAppUserId(), is("123456789"));
 		assertThat(slideshow.getPptLocation(), is("MY_PPT_LOCATION"));

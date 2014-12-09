@@ -72,6 +72,8 @@ public abstract class SlideshowMixIn {
 	@JacksonXmlProperty ( localName = "InContest" )
 	@JsonDeserialize ( using = NumberToBooleanDeserializer.class )
 	boolean inContest;
+	@JacksonXmlProperty ( localName = "Transcript" )
+	String transcript;
 	@JacksonXmlProperty ( localName = "UserID" )
 	String userId;
 	@JacksonXmlProperty ( localName = "ExternalAppUserID" )

@@ -28,6 +28,7 @@ import java.util.List;
   <SlideshowType>{ 0 if presentation, 1 if document, 2 if a portfolio,
     3 if video }</SlideshowType>
   <InContest>{ 1 if part of a contest, 0 if not }</Download>
+  <Transcript>{ transcript }</Transcript>
   <UserID>{ userID }</UserID>
   <ExternalAppUserID>{ ExternalAppUserID if uploaded using an
          external app }</ExternalAppUserID>
@@ -79,6 +80,7 @@ public class Slideshow {
 	private String downloadUrl;
 	private SlideshowType slideshowType;
 	private boolean inContest;
+	private String transcript;
 	private String userId;
 	private String externalAppUserId;
 	private String pptLocation;
@@ -310,6 +312,14 @@ public class Slideshow {
 
 	public void setInContest(boolean inContest) {
 		this.inContest = inContest;
+	}
+
+	public String getTranscript() {
+		return transcript;
+	}
+
+	public void setTranscript(String transcript) {
+		this.transcript = transcript;
 	}
 
 	public String getUserId() {

@@ -18,6 +18,7 @@
     <DownloadUrl>MY_DOWNLOAD_URL</DownloadUrl>
     <SlideshowType>0</SlideshowType>
     <InContest>0</InContest>
+    <Transcript>MY_TRANSCRIPT</Transcript>
     <UserID>25500108</UserID>
     <ExternalAppUserID>123456789</ExternalAppUserID>
     <PPTLocation>MY_PPT_LOCATION</PPTLocation>
