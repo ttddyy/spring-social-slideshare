@@ -210,10 +210,21 @@ public class SlideshowTemplate implements SlideshowOperations {
 	}
 
 	@Override
-//	public SearchSlideshowsResponse searchSlideshows(String q) => (q, 0)
-//	public SearchSlideshowsResponse searchSlideshows(String q, int page) => (q, page, 0)
-//	public SearchSlideshowsResponse searchSlideshows(String q, int page, int itemsPerPage) =>
-//			(q, page, itemsPerPage, null, null, null, null, false, null, null, false, false, false, false, false)
+	public SearchSlideshowsResponse searchSlideshows(String q) {
+		return searchSlideshows(q, 0, 0, null, null, null, null, false, null, null, false, false, false, true, true);
+	}
+
+	@Override
+	public SearchSlideshowsResponse searchSlideshows(String q, int page) {
+		return searchSlideshows(q, page, 0, null, null, null, null, false, null, null, false, false, false, true, true);
+	}
+
+	@Override
+	public SearchSlideshowsResponse searchSlideshows(String q, int page, int itemsPerPage) {
+		return searchSlideshows(q, page, itemsPerPage, null, null, null, null, false, null, null, false, false, false, true, true);
+	}
+
+	@Override
 	public SearchSlideshowsResponse searchSlideshows(
 			String q, int page, int itemsPerPage, SearchOptions.Language lang, SearchOptions.Sort sort,
 			SearchOptions.UploadDate uploadDate, SearchOptions.SearchType searchType, boolean downloadableOnly,
