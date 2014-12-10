@@ -366,6 +366,24 @@ public class SlideshowTemplate implements SlideshowOperations {
 		return response.getId();
 	}
 
+	@Override
+	public String uploadSlideshow(String username, String password, String uploadUrl, String slideshowTitle,
+								  String slideshowDescription, Collection<String> slideshowTags, Boolean makeSrcPublic,
+								  PrivacySetting privacySetting) {
+
+		if (privacySetting == null) {
+			return uploadSlideshow(username, password, uploadUrl, slideshowTitle, slideshowDescription, slideshowTags,
+								   makeSrcPublic, null, null, null, null);
+		}
+		else {
+			return uploadSlideshow(username, password, uploadUrl, slideshowTitle, slideshowDescription, slideshowTags,
+								   makeSrcPublic, privacySetting.getMakeSlideshowPrivate(),
+								   privacySetting.getGenerateSecretUrl(), privacySetting.getAllowEmbeds(),
+								   privacySetting.getShareWithContacts());
+		}
+	}
+
+	@Override
 	public String uploadSlideshow(String username, String password, String uploadUrl, String slideshowTitle,
 								  String slideshowDescription, Collection<String> slideshowTags, Boolean makeSrcPublic,
 								  Boolean makeSlideshowPrivate, Boolean generateSecretUrl, Boolean allowEmbeds,

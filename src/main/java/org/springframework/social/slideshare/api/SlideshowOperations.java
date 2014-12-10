@@ -73,6 +73,10 @@ public interface SlideshowOperations {
 
 	String uploadSlideshow(String username, String password, String uploadUrl, String slideshowTitle,
 						   String slideshowDescription, Collection<String> slideshowTags, Boolean makeSrcPublic,
+						   PrivacySetting privacySetting);
+
+	String uploadSlideshow(String username, String password, String uploadUrl, String slideshowTitle,
+						   String slideshowDescription, Collection<String> slideshowTags, Boolean makeSrcPublic,
 						   Boolean makeSlideshowPrivate, Boolean generateSecretUrl, Boolean allowEmbeds,
 						   Boolean shareWithContacts);
 
