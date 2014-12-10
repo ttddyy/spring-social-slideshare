@@ -1,9 +1,6 @@
 package org.springframework.social.slideshare.api;
 
-import org.springframework.social.slideshare.api.domain.GetSlideshowsResponse;
-import org.springframework.social.slideshare.api.domain.SearchOptions;
-import org.springframework.social.slideshare.api.domain.SearchSlideshowsResponse;
-import org.springframework.social.slideshare.api.domain.Slideshow;
+import org.springframework.social.slideshare.api.domain.*;
 
 import java.util.Collection;
 
@@ -62,6 +59,9 @@ public interface SlideshowOperations {
 			SearchOptions.FileFormat fileFormat, SearchOptions.FileType fileType, boolean isCC, boolean isCCAdapt,
 			boolean isCCCommercial, boolean detailed, boolean getTranscript);
 
+
+	String editSlideshow(String username, String password, String slideshowId, String slideshowTitle,
+						 String slideshowDescription, Collection<String> slideshowTags, PrivacySetting privacySetting);
 
 	String editSlideshow(String username, String password, String slideshowId, String slideshowTitle,
 						 String slideshowDescription, Collection<String> slideshowTags, Boolean makeSlideshowPrivate,

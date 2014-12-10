@@ -3,10 +3,7 @@ package org.springframework.social.slideshare.api.impl;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.social.slideshare.api.SlideshowOperations;
-import org.springframework.social.slideshare.api.domain.GetSlideshowsResponse;
-import org.springframework.social.slideshare.api.domain.SearchOptions;
-import org.springframework.social.slideshare.api.domain.SearchSlideshowsResponse;
-import org.springframework.social.slideshare.api.domain.Slideshow;
+import org.springframework.social.slideshare.api.domain.*;
 import org.springframework.social.slideshare.api.impl.xml.SlideshowIdHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestOperations;
@@ -282,11 +279,24 @@ public class SlideshowTemplate implements SlideshowOperations {
 		return response;
 	}
 
-	// TODO: makeSlideshowPrivate, generateSecretUrl, allowEmbeds, shareWithContacts => Privacy settings (edit & upload)
 
 	//	required: username, password, slideshowId
-//	public String editSlideshow(String username, String password, String slideshowId, String slideshowTitle,
-//								String slideshowDescription, Collection<String> slideshowTags, PrivacySettings privacySettings) {
+	@Override
+	public String editSlideshow(String username, String password, String slideshowId, String slideshowTitle,
+								String slideshowDescription, Collection<String> slideshowTags, PrivacySetting privacySetting) {
+		if (privacySetting == null) {
+			return editSlideshow(username, password, slideshowId, slideshowTitle, slideshowDescription, slideshowTags,
+								 null, null, null, null);
+		}
+		else {
+			return editSlideshow(username, password, slideshowId, slideshowTitle, slideshowDescription, slideshowTags,
+								 privacySetting.getMakeSlideshowPrivate(), privacySetting.getGenerateSecretUrl(),
+								 privacySetting.getAllowEmbeds(), privacySetting.getShareWithContacts());
+		}
+
+	}
+
+	@Override
 	public String editSlideshow(String username, String password, String slideshowId, String slideshowTitle,
 								String slideshowDescription, Collection<String> slideshowTags, Boolean makeSlideshowPrivate,
 								Boolean generateSecretUrl, Boolean allowEmbeds, Boolean shareWithContacts) {
