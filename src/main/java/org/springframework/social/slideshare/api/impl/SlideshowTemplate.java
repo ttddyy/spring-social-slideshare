@@ -2,14 +2,22 @@ package org.springframework.social.slideshare.api.impl;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.social.slideshare.api.SlideshowOperations;
 import org.springframework.social.slideshare.api.domain.*;
 import org.springframework.social.slideshare.api.impl.xml.SlideshowIdHolder;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.File;
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -408,34 +416,136 @@ public class SlideshowTemplate implements SlideshowOperations {
 		return response.getId();
 	}
 
-/*  TODO: implement this
 
 	// Need extra permission. If you want to upload a file using SlideShare API, please send an email to
 	// api@slideshare.com with your developer account username describing the use case.
-	public String uploadSlideshowContent(String username, String password, String slideshowTitle, String slideshowContent,
-										 String slideshowDescription, Collection<String> slideshowTags, boolean makeSrcPublic,
-										 Boolean makeSlideshowPrivate, Boolean generateSecretUrl, Boolean allowEmbeds,
-										 Boolean shareWithContacts) {
-		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(EDIT_SLIDESHOW_URL);
+
+	@Override
+	public String uploadSlideshowFromFile(String username, String password, File slideshowFile, String title,
+										  String description) {
+		return uploadSlideshowFromFile(username, password, slideshowFile, title, description, null, true, null, null,
+									   null, null);
+	}
+
+	@Override
+	public String uploadSlideshowFromFile(String username, String password, File slideshowFile, String title,
+										  String description, Collection<String> tags, boolean makeSrcPublic,
+										  PrivacySetting privacySetting) {
+		if (privacySetting == null) {
+			return uploadSlideshowFromFile(username, password, slideshowFile, title, description, tags, makeSrcPublic,
+										   null, null, null, null);
+		}
+		return uploadSlideshowFromFile(username, password, slideshowFile, title, description, tags, makeSrcPublic,
+									   privacySetting.getMakeSlideshowPrivate(),
+									   privacySetting.getGenerateSecretUrl(), privacySetting.getAllowEmbeds(),
+									   privacySetting.getShareWithContacts());
+	}
+
+	@Override
+	public String uploadSlideshowFromFile(String username, String password, File slideshowFile, String title,
+										  String description, Collection<String> tags, boolean makeSrcPublic,
+										  Boolean makeSlideshowPrivate, Boolean generateSecretUrl, Boolean allowEmbeds,
+										  Boolean shareWithContacts) {
+		Resource slideshowResource = new FileSystemResource(slideshowFile);
+		return uploadSlideshowResource(username, password, slideshowResource, title, description, tags, makeSrcPublic,
+									   makeSlideshowPrivate, generateSecretUrl, allowEmbeds, shareWithContacts);
+	}
+
+	@Override
+	public String uploadSlideshowFromFile(String username, String password, String slideshowFilePath, String title,
+										  String description, Collection<String> tags, boolean makeSrcPublic,
+										  Boolean makeSlideshowPrivate, Boolean generateSecretUrl, Boolean allowEmbeds,
+										  Boolean shareWithContacts) {
+		Resource slideshowResource = new FileSystemResource(slideshowFilePath);
+		return uploadSlideshowResource(username, password, slideshowResource, title, description, tags,
+									   makeSrcPublic, makeSlideshowPrivate, generateSecretUrl, allowEmbeds, shareWithContacts);
+	}
+
+	@Override
+	public String uploadSlideshowFromContent(String username, String password, String slideshowContent, String filename,
+											 String title, String description, Collection<String> tags,
+											 boolean makeSrcPublic, PrivacySetting privacySetting) {
+		if (privacySetting == null) {
+			return uploadSlideshowFromContent(username, password, slideshowContent.getBytes(), filename, title,
+											  description, tags, makeSrcPublic, null, null, null, null);
+		}
+		return uploadSlideshowFromContent(username, password, slideshowContent.getBytes(), filename, title,
+										  description, tags, makeSrcPublic, privacySetting.getMakeSlideshowPrivate(),
+										  privacySetting.getGenerateSecretUrl(), privacySetting.getAllowEmbeds(),
+										  privacySetting.getShareWithContacts());
+	}
+
+	@Override
+	public String uploadSlideshowFromContent(String username, String password, String slideshowContent, String filename,
+											 String title, String description, Collection<String> tags,
+											 boolean makeSrcPublic, Boolean makeSlideshowPrivate,
+											 Boolean generateSecretUrl, Boolean allowEmbeds, Boolean shareWithContacts) {
+		return uploadSlideshowFromContent(username, password, slideshowContent.getBytes(), filename, title,
+										  description, tags, makeSrcPublic, makeSlideshowPrivate,
+										  generateSecretUrl, allowEmbeds, shareWithContacts);
+
+	}
+
+	@Override
+	public String uploadSlideshowFromContent(String username, String password, byte[] slideshowContent,
+											 final String filename, String title, String description,
+											 Collection<String> tags, boolean makeSrcPublic,
+											 Boolean makeSlideshowPrivate, Boolean generateSecretUrl, Boolean allowEmbeds,
+											 Boolean shareWithContacts) {
+		Resource resource = new ByteArrayResource(slideshowContent) {
+			@Override
+			public String getFilename() {
+				return filename;  // SS API requires to provide filename
+			}
+		};
+
+		return uploadSlideshowResource(username, password, resource, title, description, tags,
+									   makeSrcPublic, makeSlideshowPrivate, generateSecretUrl, allowEmbeds, shareWithContacts);
+
+	}
+
+	@Override
+	public String uploadSlideshowResource(String username, String password, Resource slideshowResource, String slideshowTitle,
+										  String slideshowDescription, Collection<String> slideshowTags, boolean makeSrcPublic,
+										  Boolean makeSlideshowPrivate, Boolean generateSecretUrl, Boolean allowEmbeds,
+										  Boolean shareWithContacts) {
+
+
+		// use builder just to reuse existing parameter population logic
+		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(UPLOAD_SLIDESHOW_URL);
 
 		// required params
 		builder.queryParam("username", username);
 		builder.queryParam("password", password);
-		builder.queryParam("slideshow_srcfile", slideshowContent);
+		builder.queryParam("slideshow_title", slideshowTitle);
+		// do not add "slideshow_srcfile" here because builder toString the object
 
 		// optional params
 		populateSlideshowUploadOptionalParameters(
 				builder, slideshowDescription, slideshowTags, makeSrcPublic, makeSlideshowPrivate,
 				generateSecretUrl, allowEmbeds, shareWithContacts);
 
-		String url = builder.toUriString();
+		MultiValueMap<String, String> params = builder.build().getQueryParams();
+
+		// convert <String, String> to <String, Object>
+		// TODO: clean up with better way
+		MultiValueMap<String, Object> part = new LinkedMultiValueMap<String, Object>();
+		for (Map.Entry<String, List<String>> entry : params.entrySet()) {
+			String key = entry.getKey();
+			for (String value : entry.getValue()) {
+				part.add(key, value);
+			}
+		}
+		part.add("slideshow_srcfile", slideshowResource);
+
+
+		String url = UPLOAD_SLIDESHOW_URL;
 		logger.debug("requesting SlideShare API: " + url);
 
-		// needs to be POST
-		SlideshowIdHolder response = this.restOperations.postForObject(url, SlideshowIdHolder.class);
+		SlideshowIdHolder response = this.restOperations.postForObject(url, part, SlideshowIdHolder.class);
 		return response.getId();
 	}
-*/
+
 
 	private void populateSlideshowUploadOptionalParameters(UriComponentsBuilder builder, String slideshowDescription, Collection<String> slideshowTags, Boolean makeSrcPublic,
 														   Boolean makeSlideshowPrivate, Boolean generateSecretUrl, Boolean allowEmbeds,

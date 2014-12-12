@@ -7,7 +7,9 @@ import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.ResourceHttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter;
 import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
 import org.springframework.social.slideshare.api.SlideShare;
 import org.springframework.social.slideshare.api.SlideshowOperations;
@@ -69,8 +71,11 @@ public class SlideShareTemplate implements SlideShare {
 	}
 
 	protected List<HttpMessageConverter<?>> getMessageConverters() {
+		// TODO: cleanup
 		List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();
 		messageConverters.add(new StringHttpMessageConverter());
+		messageConverters.add(new ResourceHttpMessageConverter());
+		messageConverters.add(new AllEncompassingFormHttpMessageConverter());  // for multipart upload
 		messageConverters.add(getXmlConverter());
 		return messageConverters;
 	}

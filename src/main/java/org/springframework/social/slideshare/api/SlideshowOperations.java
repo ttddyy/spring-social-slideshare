@@ -1,7 +1,10 @@
 package org.springframework.social.slideshare.api;
 
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.social.slideshare.api.domain.*;
 
+import java.io.File;
 import java.util.Collection;
 
 /**
@@ -79,5 +82,41 @@ public interface SlideshowOperations {
 						   String slideshowDescription, Collection<String> slideshowTags, Boolean makeSrcPublic,
 						   Boolean makeSlideshowPrivate, Boolean generateSecretUrl, Boolean allowEmbeds,
 						   Boolean shareWithContacts);
+
+	String uploadSlideshowFromFile(String username, String password, File slideshowFile, String title, String description);
+
+	String uploadSlideshowFromFile(String username, String password, File slideshowFile, String title,
+								   String description, Collection<String> tags, boolean makeSrcPublic,
+								   PrivacySetting privacySetting);
+
+	String uploadSlideshowFromFile(String username, String password, File slideshowFile, String title,
+								   String description, Collection<String> tags, boolean makeSrcPublic,
+								   Boolean makeSlideshowPrivate, Boolean generateSecretUrl, Boolean allowEmbeds,
+								   Boolean shareWithContacts);
+
+	String uploadSlideshowFromFile(String username, String password, String slideshowFilePath, String title,
+								   String description, Collection<String> tags, boolean makeSrcPublic,
+								   Boolean makeSlideshowPrivate, Boolean generateSecretUrl, Boolean allowEmbeds,
+								   Boolean shareWithContacts);
+
+	String uploadSlideshowFromContent(String username, String password, String slideshowContent, String filename,
+									  String title, String description, Collection<String> tags,
+									  boolean makeSrcPublic, PrivacySetting privacySetting);
+
+	String uploadSlideshowFromContent(String username, String password, byte[] slideshowContent, String filename, String title,
+									  String description, Collection<String> tags, boolean makeSrcPublic,
+									  Boolean makeSlideshowPrivate, Boolean generateSecretUrl, Boolean allowEmbeds,
+									  Boolean shareWithContacts);
+
+	String uploadSlideshowFromContent(String username, String password, String slideshowContent, String filename,
+									  String title, String description, Collection<String> tags,
+									  boolean makeSrcPublic, Boolean makeSlideshowPrivate,
+									  Boolean generateSecretUrl, Boolean allowEmbeds, Boolean shareWithContacts);
+
+	String uploadSlideshowResource(String username, String password, Resource slideshowResource, String title,
+								   String description, Collection<String> tags, boolean makeSrcPublic,
+								   Boolean makeSlideshowPrivate, Boolean generateSecretUrl, Boolean allowEmbeds,
+								   Boolean shareWithContacts);
+
 
 }
