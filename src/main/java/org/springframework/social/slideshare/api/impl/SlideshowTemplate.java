@@ -1,7 +1,5 @@
 package org.springframework.social.slideshare.api.impl;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -21,6 +19,8 @@ import java.util.Map;
 
 
 /**
+ * Slideshow related operations.
+ *
  * @author Tadaya Tsuyukubo
  */
 public class SlideshowTemplate implements SlideshowOperations {
@@ -33,8 +33,6 @@ public class SlideshowTemplate implements SlideshowOperations {
 	public static final String EDIT_SLIDESHOW_URL = BASE_URL + "/edit_slideshow";
 	public static final String DELETE_SLIDESHOW_URL = BASE_URL + "/delete_slideshow";
 	public static final String UPLOAD_SLIDESHOW_URL = BASE_URL + "/upload_slideshow";
-
-	private static Log logger = LogFactory.getLog(SlideshowTemplate.class);
 
 	private final RestOperations restOperations;
 
@@ -108,8 +106,6 @@ public class SlideshowTemplate implements SlideshowOperations {
 		builder.queryParam("get_transcript", transcript ? "1" : "0");
 
 		String url = builder.toUriString();
-		logger.debug("requesting SlideShare API: " + url);
-
 		Slideshow slideshow = this.restOperations.getForObject(url, Slideshow.class);
 		return slideshow;
 	}
@@ -134,8 +130,6 @@ public class SlideshowTemplate implements SlideshowOperations {
 		}
 
 		String url = builder.toUriString();
-		logger.debug("requesting SlideShare API: " + url);
-
 		GetSlideshowsResponse response = this.restOperations.getForObject(url, GetSlideshowsResponse.class);
 		response.setRequestType(GetSlideshowsResponse.RequestType.BY_TAG);
 
@@ -162,8 +156,6 @@ public class SlideshowTemplate implements SlideshowOperations {
 		}
 
 		String url = builder.toUriString();
-		logger.debug("requesting SlideShare API: " + url);
-
 		GetSlideshowsResponse response = this.restOperations.getForObject(url, GetSlideshowsResponse.class);
 		response.setRequestType(GetSlideshowsResponse.RequestType.BY_GROUP);
 
@@ -206,8 +198,6 @@ public class SlideshowTemplate implements SlideshowOperations {
 		}
 
 		String url = builder.toUriString();
-		logger.debug("requesting SlideShare API: " + url);
-
 		GetSlideshowsResponse response = this.restOperations.getForObject(url, GetSlideshowsResponse.class);
 		response.setRequestType(GetSlideshowsResponse.RequestType.BY_USER);
 
@@ -281,8 +271,6 @@ public class SlideshowTemplate implements SlideshowOperations {
 
 
 		String url = builder.toUriString();
-		logger.debug("requesting SlideShare API: " + url);
-
 		SearchSlideshowsResponse response = this.restOperations.getForObject(url, SearchSlideshowsResponse.class);
 		return response;
 	}
@@ -327,8 +315,6 @@ public class SlideshowTemplate implements SlideshowOperations {
 
 
 		String url = builder.toUriString();
-		logger.debug("requesting SlideShare API: " + url);
-
 		SlideshowIdHolder response = this.restOperations.getForObject(url, SlideshowIdHolder.class);
 		return response.getId();
 	}
@@ -366,8 +352,6 @@ public class SlideshowTemplate implements SlideshowOperations {
 		builder.queryParam("slideshow_id", slideshowId);
 
 		String url = builder.toUriString();
-		logger.debug("requesting SlideShare API: " + url);
-
 		SlideshowIdHolder response = this.restOperations.getForObject(url, SlideshowIdHolder.class);
 		return response.getId();
 	}
@@ -414,8 +398,6 @@ public class SlideshowTemplate implements SlideshowOperations {
 				generateSecretUrl, allowEmbeds, shareWithContacts);
 
 		String url = builder.toUriString();
-		logger.debug("requesting SlideShare API: " + url);
-
 		SlideshowIdHolder response = this.restOperations.getForObject(url, SlideshowIdHolder.class);
 		return response.getId();
 	}
@@ -533,7 +515,7 @@ public class SlideshowTemplate implements SlideshowOperations {
 
 		// convert <String, String> to <String, Object>
 		// TODO: clean up with better way
-		MultiValueMap<String, Object> part = new LinkedMultiValueMap<String, Object>();
+		MultiValueMap<String, Object> part = new LinkedMultiValueMap<>();
 		for (Map.Entry<String, List<String>> entry : params.entrySet()) {
 			String key = entry.getKey();
 			for (String value : entry.getValue()) {
@@ -544,8 +526,6 @@ public class SlideshowTemplate implements SlideshowOperations {
 
 
 		String url = UPLOAD_SLIDESHOW_URL;
-		logger.debug("requesting SlideShare API: " + url);
-
 		SlideshowIdHolder response = this.restOperations.postForObject(url, part, SlideshowIdHolder.class);
 		return response.getId();
 	}

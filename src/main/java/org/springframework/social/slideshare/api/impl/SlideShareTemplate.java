@@ -1,6 +1,8 @@
 package org.springframework.social.slideshare.api.impl;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestFactory;
@@ -17,6 +19,7 @@ import org.springframework.social.slideshare.api.impl.xml.JacksonUtils;
 import org.springframework.social.support.ClientHttpRequestFactorySelector;
 import org.springframework.social.support.HttpRequestDecorator;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
@@ -26,12 +29,14 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * This is the central class to interact with SlideShare.
+ *
  * @author Tadaya Tsuyukubo
  */
-
 // since SlideShare doesn't use OAuth, not extending any abstract class from spring-social-core
-// TODO: consider expandability, getRestTemplate, protected methods
 public class SlideShareTemplate implements SlideShare {
+
+	private static final Log logger = LogFactory.getLog(SlideShareTemplate.class);
 
 	private final RestTemplate restTemplate;
 	private SlideshowOperations slideshowOperations;
@@ -71,8 +76,7 @@ public class SlideShareTemplate implements SlideShare {
 	}
 
 	protected List<HttpMessageConverter<?>> getMessageConverters() {
-		// TODO: cleanup
-		List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();
+		List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
 		messageConverters.add(new StringHttpMessageConverter());
 		messageConverters.add(new ResourceHttpMessageConverter());
 		messageConverters.add(new AllEncompassingFormHttpMessageConverter());  // for multipart upload
@@ -116,15 +120,14 @@ public class SlideShareTemplate implements SlideShare {
 					// TODO: refactor
 					Date now = new Date();
 					String ts = Long.toString(now.getTime() / 1000);
-					String hash = DigestUtils.shaHex(sharedSecret + ts).toLowerCase();
+					String hash = DigestUtils.sha1Hex(sharedSecret + ts).toLowerCase();
 
 					UriComponentsBuilder builder = UriComponentsBuilder.fromUri(super.getURI());
 					builder.queryParam("api_key", apiKey);
 					builder.queryParam("ts", ts);
 					builder.queryParam("hash", hash);
 
-					// TODO: debug the url
-					String url = builder.build().toString();
+					logger.debug("requesting SlideShare API: " + builder.toUriString());
 
 					return builder.build().toUri();
 				}
