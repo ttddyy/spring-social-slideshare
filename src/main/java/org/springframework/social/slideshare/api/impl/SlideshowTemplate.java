@@ -296,11 +296,9 @@ public class SlideshowTemplate implements SlideshowOperations {
 			return editSlideshow(username, password, slideshowId, slideshowTitle, slideshowDescription, slideshowTags,
 								 null, null, null, null);
 		}
-		else {
-			return editSlideshow(username, password, slideshowId, slideshowTitle, slideshowDescription, slideshowTags,
-								 privacySetting.getMakeSlideshowPrivate(), privacySetting.getGenerateSecretUrl(),
-								 privacySetting.getAllowEmbeds(), privacySetting.getShareWithContacts());
-		}
+		return editSlideshow(username, password, slideshowId, slideshowTitle, slideshowDescription, slideshowTags,
+							 privacySetting.getMakeSlideshowPrivate(), privacySetting.getGenerateSecretUrl(),
+							 privacySetting.getAllowEmbeds(), privacySetting.getShareWithContacts());
 
 	}
 
@@ -375,38 +373,44 @@ public class SlideshowTemplate implements SlideshowOperations {
 	}
 
 	@Override
-	public String uploadSlideshow(String username, String password, String uploadUrl, String slideshowTitle,
-								  String slideshowDescription, Collection<String> slideshowTags, Boolean makeSrcPublic,
-								  PrivacySetting privacySetting) {
+	public String uploadSlideshowFromUrl(String username, String password, String uploadUrl, String title,
+										 String description, Collection<String> tags, Boolean makeSrcPublic) {
 
-		if (privacySetting == null) {
-			return uploadSlideshow(username, password, uploadUrl, slideshowTitle, slideshowDescription, slideshowTags,
-								   makeSrcPublic, null, null, null, null);
-		}
-		else {
-			return uploadSlideshow(username, password, uploadUrl, slideshowTitle, slideshowDescription, slideshowTags,
-								   makeSrcPublic, privacySetting.getMakeSlideshowPrivate(),
-								   privacySetting.getGenerateSecretUrl(), privacySetting.getAllowEmbeds(),
-								   privacySetting.getShareWithContacts());
-		}
+		return uploadSlideshowFromUrl(username, password, uploadUrl, title, description, tags, makeSrcPublic, null,
+									  null, null, null);
 	}
 
 	@Override
-	public String uploadSlideshow(String username, String password, String uploadUrl, String slideshowTitle,
-								  String slideshowDescription, Collection<String> slideshowTags, Boolean makeSrcPublic,
-								  Boolean makeSlideshowPrivate, Boolean generateSecretUrl, Boolean allowEmbeds,
-								  Boolean shareWithContacts) {
+	public String uploadSlideshowFromUrl(String username, String password, String uploadUrl, String title,
+										 String description, Collection<String> tags, Boolean makeSrcPublic,
+										 PrivacySetting privacySetting) {
+
+		if (privacySetting == null) {
+			return uploadSlideshowFromUrl(username, password, uploadUrl, title, description, tags, makeSrcPublic,
+										  null, null, null, null);
+		}
+		return uploadSlideshowFromUrl(username, password, uploadUrl, title, description, tags,
+									  makeSrcPublic, privacySetting.getMakeSlideshowPrivate(),
+									  privacySetting.getGenerateSecretUrl(), privacySetting.getAllowEmbeds(),
+									  privacySetting.getShareWithContacts());
+	}
+
+	@Override
+	public String uploadSlideshowFromUrl(String username, String password, String uploadUrl, String title,
+										 String description, Collection<String> tags, Boolean makeSrcPublic,
+										 Boolean makeSlideshowPrivate, Boolean generateSecretUrl, Boolean allowEmbeds,
+										 Boolean shareWithContacts) {
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(UPLOAD_SLIDESHOW_URL);
 
 		// required params
 		builder.queryParam("username", username);
 		builder.queryParam("password", password);
 		builder.queryParam("upload_url", uploadUrl);
-		builder.queryParam("slideshow_title", slideshowTitle);
+		builder.queryParam("slideshow_title", title);
 
 		// optional params
 		populateSlideshowUploadOptionalParameters(
-				builder, slideshowDescription, slideshowTags, makeSrcPublic, makeSlideshowPrivate,
+				builder, description, tags, makeSrcPublic, makeSlideshowPrivate,
 				generateSecretUrl, allowEmbeds, shareWithContacts);
 
 		String url = builder.toUriString();

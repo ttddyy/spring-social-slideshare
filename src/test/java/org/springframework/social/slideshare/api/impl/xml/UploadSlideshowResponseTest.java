@@ -25,7 +25,7 @@ public class UploadSlideshowResponseTest extends AbstractSlideshareTemplateTest 
 				.andRespond(withSuccess(readFile("response-upload-slideshow.xml"), MediaType.APPLICATION_XML))
 		;
 
-		String response = slideshowOperations.uploadSlideshow(null, null, null, null, null, null, false, false, false, false, false);
+		String response = slideshowOperations.uploadSlideshowFromUrl(null, null, null, null, null, null, false, false, false, false, false);
 
 		assertThat(response, is("112233"));
 	}

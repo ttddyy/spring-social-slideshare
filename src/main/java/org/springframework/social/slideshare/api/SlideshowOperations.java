@@ -74,14 +74,15 @@ public interface SlideshowOperations {
 	String deleteSlideshow(String username, String password, String slideshowId);
 
 
-	String uploadSlideshow(String username, String password, String uploadUrl, String slideshowTitle,
-						   String slideshowDescription, Collection<String> slideshowTags, Boolean makeSrcPublic,
-						   PrivacySetting privacySetting);
+	String uploadSlideshowFromUrl(String username, String password, String uploadUrl, String title,
+								  String description, Collection<String> tags, Boolean makeSrcPublic);
 
-	String uploadSlideshow(String username, String password, String uploadUrl, String slideshowTitle,
-						   String slideshowDescription, Collection<String> slideshowTags, Boolean makeSrcPublic,
-						   Boolean makeSlideshowPrivate, Boolean generateSecretUrl, Boolean allowEmbeds,
-						   Boolean shareWithContacts);
+	String uploadSlideshowFromUrl(String username, String password, String uploadUrl, String title, String description,
+								  Collection<String> tags, Boolean makeSrcPublic, PrivacySetting privacySetting);
+
+	String uploadSlideshowFromUrl(String username, String password, String uploadUrl, String title, String description,
+								  Collection<String> tags, Boolean makeSrcPublic, Boolean makeSlideshowPrivate,
+								  Boolean generateSecretUrl, Boolean allowEmbeds, Boolean shareWithContacts);
 
 	String uploadSlideshowFromFile(String username, String password, File slideshowFile, String title, String description);
 
