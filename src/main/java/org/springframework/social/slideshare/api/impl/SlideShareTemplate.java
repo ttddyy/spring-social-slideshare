@@ -19,14 +19,13 @@ import org.springframework.social.slideshare.api.impl.xml.JacksonUtils;
 import org.springframework.social.support.ClientHttpRequestFactorySelector;
 import org.springframework.social.support.HttpRequestDecorator;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This is the central class to interact with SlideShare.
@@ -43,7 +42,6 @@ public class SlideShareTemplate implements SlideShare {
 
 
 	public SlideShareTemplate(String apiKey, String sharedSecret) {
-		// TODO: cleanup initial setup of these objects
 		this.restTemplate = createRestTemplateWithCulledMessageConverters();
 		registerSlideShareInterceptor(apiKey, sharedSecret);
 		configureRestTemplate(this.restTemplate);
@@ -52,17 +50,17 @@ public class SlideShareTemplate implements SlideShare {
 		this.slideshowOperations = new SlideshowTemplate(this.restTemplate);
 	}
 
-	private void configureRestTemplate(RestTemplate restTemplate) {
+	protected void configureRestTemplate(RestTemplate restTemplate) {
 		restTemplate.setErrorHandler(new SlideshareErrorHandler());
 	}
 
-	private void registerSlideShareInterceptor(String apiKey, String sharedSecret) {
+	protected void registerSlideShareInterceptor(String apiKey, String sharedSecret) {
 		List<ClientHttpRequestInterceptor> interceptors = this.restTemplate.getInterceptors();
 		interceptors.add(new SlideShareApiValidationParameterRequestInterceptor(apiKey, sharedSecret));
 		this.restTemplate.setInterceptors(interceptors);
 	}
 
-	private RestTemplate createRestTemplateWithCulledMessageConverters() {
+	protected RestTemplate createRestTemplateWithCulledMessageConverters() {
 
 		// need to buffer the response in order to check the response was error or not.
 		// http status is always 200 but returned xml is error xml.
@@ -117,9 +115,7 @@ public class SlideShareTemplate implements SlideShare {
 				@Override
 				public URI getURI() {
 
-					// TODO: refactor
-					Date now = new Date();
-					String ts = Long.toString(now.getTime() / 1000);
+					String ts = Long.toString(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
 					String hash = DigestUtils.sha1Hex(sharedSecret + ts).toLowerCase();
 
 					UriComponentsBuilder builder = UriComponentsBuilder.fromUri(super.getURI());
