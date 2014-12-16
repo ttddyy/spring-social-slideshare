@@ -19,7 +19,7 @@ import java.util.Map;
 
 
 /**
- * Slideshow related operations.
+ * Implementation of slideshow related operations.
  *
  * @author Tadaya Tsuyukubo
  */
@@ -224,7 +224,7 @@ public class SlideshowTemplate implements SlideshowOperations {
 			String q, int page, int itemsPerPage, SearchOptions.Language lang, SearchOptions.Sort sort,
 			SearchOptions.UploadDate uploadDate, SearchOptions.SearchType searchType, boolean downloadableOnly,
 			SearchOptions.FileFormat fileformat, SearchOptions.FileType fileType, boolean isCC, boolean isCCAdapt,
-			boolean isCCCommercial, boolean detailed, boolean getTranscript) {
+			boolean isCCCommercial, boolean detailed, boolean transcript) {
 
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(SEARCH_SLIDESHOWS_URL);
 
@@ -267,6 +267,10 @@ public class SlideshowTemplate implements SlideshowOperations {
 		}
 		if (detailed) {
 			builder.queryParam("detailed", 1);  //  to include optional information. 1 to include, 0 (default) for basic information.
+
+			if (transcript) {
+				builder.queryParam("get_transcript", 1);  // Set to '1' to include transcript in detailed response.
+			}
 		}
 
 

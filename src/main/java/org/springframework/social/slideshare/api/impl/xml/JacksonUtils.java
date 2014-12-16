@@ -45,9 +45,6 @@ public class JacksonUtils {
 				.mixIn(SlideShareServiceError.Message.class, SlideShareServiceErrorMixin.MessageMixin.class)
 
 				.dateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss zzz"))
-//				.featuresToEnable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT)  // TODO: filter null element in collection
-//				.featuresToEnable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
-//				.featuresToEnable(DeserializationFeature.USE_JAVA_ARRAY_FOR_JSON_ARRAY)
 				.createXmlMapper(true)
 				.build();
 	}
@@ -59,10 +56,10 @@ public class JacksonUtils {
 			T result = XML_MAPPER.reader(javaType).readValue(jsonNode);
 			return result;
 		}
-		else if (jp.getCurrentToken() == JsonToken.VALUE_STRING) {  // TODO: add comment
+		else if (jp.getCurrentToken() == JsonToken.VALUE_STRING) {
 			String str = jp.getText();
 			if (StringUtils.isEmpty(StringUtils.trimAllWhitespace(str))) {
-				// TOOD: cleanup
+				// TODO: cleanup
 				final DeserializationConfig config = ctxt.getConfig();
 				BeanDescription beanDesc = config.introspect(javaType);
 				boolean fixAccess = ctxt.canOverrideAccessModifiers();

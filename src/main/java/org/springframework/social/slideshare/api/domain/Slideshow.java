@@ -6,61 +6,6 @@ import java.util.List;
 /**
  * @author Tadaya Tsuyukubo
  */
-
-/*
-  <ID>{ slideshow id }</ID>
-  <Title>{ slideshow title }</Title>
-  <Description>{ slideshow description }</Description>
-  <Status>{ 0 if queued for conversion, 1 if converting, 2 if converted,
-            3 if conversion failed }
-  </Status>
-  <Username>{ username }</Username>
-  <URL>{ web permalink }</URL>
-  <ThumbnailURL>{ thumbnail URL }</ThumbnailURL>
-  <ThumbnailSmallURL>{ URL of smaller thumbnail }</ThumbnailSmallURL>
-  <Embed>{ embed code }</Embed>
-  <Created>{ date slideshow created }</Created>
-  <Updated>{ date slideshow was last update }</Updated>
-  <Language>{ language, as specified by two-letter code }</Language>
-  <Format>ppt (or pdf, pps, odp, doc, pot, txt, rdf) </Format>
-  <Download>{ 1 if available to download, else 0 }</Download>
-  <DownloadUrl>{ returns if available to download }</DownloadUrl>
-  <SlideshowType>{ 0 if presentation, 1 if document, 2 if a portfolio,
-    3 if video }</SlideshowType>
-  <InContest>{ 1 if part of a contest, 0 if not }</Download>
-  <Transcript>{ transcript }</Transcript>
-  <UserID>{ userID }</UserID>
-  <ExternalAppUserID>{ ExternalAppUserID if uploaded using an
-         external app }</ExternalAppUserID>
-  <ExternalAppID>{ ExternalAppID for the external app }</ExternalAppID>
-  <PPTLocation>{ PPTLocation }</ExternalAppUserID>
-  <StrippedTitle>{ Stripped Title }</StrippedTitle>
-  <Tags>
-  <Tag Count="{ number of times tag has been used }" Owner="{ 1 if owner
-                has used the tag, else 0 }">{ tag name }
-  </Tag>
-  </Tags>
-  <Audio>{ 0, or 1 if the slideshow contains audio }</Audio>
-  <NumDownloads>{ number of downloads }</NumDownloads>
-  <NumViews>{ number of views }</NumViews>
-  <NumComments>{ number of comments }</NumComments>
-  <NumFavorites>{ number of favorites }</NumFavorites>
-  <NumSlides>{ number of slides }</NumSlides>
-  <RelatedSlideshows>
-    <RelatedSlideshowID rank="{ rank, where 1 is highest}">
-    { slideshow id } </RelatedSlideshowID>
-  </RelatedSlideshows>
-  <PrivacyLevel>{ 0, or 1 if private }</PrivacyLevel>
-  <FlagVisible>{ 1, or 0 if slideshow has been flagged }</FlagVisible>
-  <ShowOnSS>{ 0, or 1 if not to be shown on Slideshare }</ShowOnSS>
-  <SecretURL>{ 0, or 1 if secret URL is enabled }</SecretURL>
-  <AllowEmbed>{ 0, or 1 if embeds are allowed }</AllowEmbed>
-  <ShareWithContacts>{ 0, or 1 if set to private, but contacts can view
-                       slideshow }
-  </ShareWithContacts>
-</Slideshow>
-
- */
 public class Slideshow {
 	private String id;
 	private String title;

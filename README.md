@@ -9,6 +9,10 @@ Actively implementing features!!
 
 ping me at [@ttddyy](https://twitter.com/ttddyy) if you want to contact me. :)   
 
+__* NOTE__
+Currently only slideshow related methods are implemented. If you want other operations(user, leads, campaign, etc) to
+be implemented, please ping me or create issue. I will implement if there is need.
+
 # key features
 
 
@@ -21,7 +25,7 @@ ping me at [@ttddyy](https://twitter.com/ttddyy) if you want to contact me. :)
 
 | spring-social-evernote | spring-social | spring-framework |                     note |
 | ----------------------:| -------------:| ----------------:| ------------------------ | 
-|         1.0.0-SNAPSHOT | 1.1.0.RELEASE |    4.1.1.RELEASE |                          |
+|         1.0.0-SNAPSHOT | 1.1.0.RELEASE |    4.1.2.RELEASE |                          |
 
 ## how to get
 
@@ -53,6 +57,4 @@ ping me at [@ttddyy](https://twitter.com/ttddyy) if you want to contact me. :)
 
 # TODO
 
-- upgrade spring 4.1.2
-  - can change usage of jackson builder
 
