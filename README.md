@@ -5,16 +5,18 @@ Spring Social provider module for SlideShare API.
 
 # Project Status
 
-Actively implementing features!!  
+Currently, only `SlideshowTemplate`(slideshow related operations) is implemented.  
+If you need other operations(user, leads, campaign, etc) or implementation of Spring Social's _Service Provider 
+Connect Framework_ such as `ApiAdapter`, `ConnectionFactory`, `ServiceProvider`, etc, please ping me or [create an 
+issue on github](https://github.com/ttddyy/spring-social-slideshare/issues). 
+I will implement if there is a need.
 
-ping me at [@ttddyy](https://twitter.com/ttddyy) if you want to contact me. :)   
+Ping me at [@ttddyy](https://twitter.com/ttddyy) if you want to contact me. :)   
 
-__* NOTE__
-Currently only slideshow related methods are implemented. If you want other operations(user, leads, campaign, etc) to
-be implemented, please ping me or create issue. I will implement if there is need.
 
 # key features
 
+- `SlideshowTemplate` to interact with SlideShare slideshow related operations in java 
 
 ## documentation
 
