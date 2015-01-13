@@ -63,7 +63,7 @@ public class SlideShareTemplate implements SlideShare {
 	protected RestTemplate createRestTemplateWithCulledMessageConverters() {
 
 		// need to buffer the response in order to check the response was error or not.
-		// http status is always 200 but returned xml is error xml.
+		// if slideshare returns error, http status is 200 and contents is error xml.
 		ClientHttpRequestFactory requestFactory = ClientHttpRequestFactorySelector.getRequestFactory();
 		ClientHttpRequestFactory bufferedRequestFactory = ClientHttpRequestFactorySelector.bufferRequests(requestFactory);
 
@@ -84,7 +84,7 @@ public class SlideShareTemplate implements SlideShare {
 
 	protected HttpMessageConverter<?> getXmlConverter() {
 		MappingJackson2XmlHttpMessageConverter converter = new MappingJackson2XmlHttpMessageConverter();
-		converter.setObjectMapper(JacksonUtils.XML_MAPPER);
+		converter.setObjectMapper(JacksonUtils.XML_MAPPER);  // use shared mapper
 		return converter;
 	}
 

@@ -31,15 +31,10 @@ public class SlideShareErrorResponseTest extends AbstractSlideshareTemplateTest 
 			slideshowOperations.editSlideshow(null, null, null, null, null, null, false, false, false, false);
 			fail("should throw exception");
 		}
-		catch (SlideShareServiceErrorException e) {
-			assertThat(e, is(instanceOf(SlideShareServiceErrorException.class)));
-
-			SlideShareServiceErrorException ex = (SlideShareServiceErrorException) e;
+		catch (SlideShareServiceErrorException ex) {
 			SlideShareServiceErrorCode errorCode = ex.getErrorCode();
-
 			assertThat(errorCode, is(notNullValue()));
 			assertThat(errorCode, is(SlideShareServiceErrorCode.NO_API_KEY_PROVIDED));
-
 		}
 	}
 
