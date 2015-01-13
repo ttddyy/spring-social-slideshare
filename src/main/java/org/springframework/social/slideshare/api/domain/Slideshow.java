@@ -2,11 +2,16 @@ package org.springframework.social.slideshare.api.domain;
 
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Tadaya Tsuyukubo
  */
 public class Slideshow {
+
+	private static Pattern THUMBNAIL_SIZE_PATTERN = Pattern.compile("\\[(?<width>\\d+),(?<height>\\d+)\\]");
+
 	private String id;
 	private String title;
 	private String description;
@@ -410,4 +415,26 @@ public class Slideshow {
 	public void setShareWithContacts(boolean shareWithContacts) {
 		this.shareWithContacts = shareWithContacts;
 	}
+
+	// utility methods
+	public Integer getThumbnailSizeWidth() {
+		return getSpecificThumbnailSize("width");
+	}
+
+	public Integer getThumbnailSizeHeight() {
+		return getSpecificThumbnailSize("height");
+	}
+
+	private Integer getSpecificThumbnailSize(String groupName) {
+		if (this.thumbnailSize == null) {
+			return null;
+		}
+		Matcher matcher = THUMBNAIL_SIZE_PATTERN.matcher(this.thumbnailSize);
+		if (matcher.find()) {
+			return Integer.valueOf(matcher.group(groupName));
+		}
+		return null;
+	}
+
+
 }
