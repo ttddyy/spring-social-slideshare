@@ -21,9 +21,9 @@ I'm [@ttddyy](https://twitter.com/ttddyy) on twitter if you want to ping me. :)
 
 ## library versions
 
-| spring-social-slideshare | spring-social | spring-framework |                                note |
-| ------------------------:| -------------:| ----------------:| ------------------------------------| 
-|           1.0.0-SNAPSHOT | 1.1.0.RELEASE |    4.1.2.RELEASE |   work with later version of spring |
+| spring-social-slideshare | spring-io-platform | spring-social | spring-framework |                                note |
+| ------------------------:| ------------------:|--------------:|-----------------:| ------------------------------------| 
+|           1.0.0-SNAPSHOT |      1.1.0.RELEASE | 1.1.0.RELEASE |    4.1.3.RELEASE |   work with later version of spring |
 
 ## how to get
 
@@ -42,8 +42,9 @@ I'm [@ttddyy](https://twitter.com/ttddyy) on twitter if you want to ping me. :)
 ```java
   SlideShare slideShare = new SlideShareTemplate("api_key", "shared_secret");
   SlideshowOperations slideshowOperations = slideShare.slideshowOperations();
-  Slideshow slideshow = slideshowOperations.getSlideshow("0123456", ...);
+
   // you can get/search/edit/delete/upload slideshows
+  Slideshow slideshow = slideshowOperations.getSlideshow("0123456", ...);
 ```
 
 # TODO
