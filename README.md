@@ -21,9 +21,11 @@ I'm [@ttddyy](https://twitter.com/ttddyy) on twitter if you want to ping me. :)
 
 ## library versions
 
-| spring-social-slideshare | spring-io-platform | spring-social | spring-framework |                                note |
-| ------------------------:| ------------------:|--------------:|-----------------:| ------------------------------------| 
-|           1.0.0-SNAPSHOT |      1.1.0.RELEASE | 1.1.0.RELEASE |    4.1.3.RELEASE |   work with later version of spring |
+| spring-social-slideshare | spring-io-platform |                                                 note |
+| ------------------------:| ------------------:|------------------------------------------------------| 
+|           1.0.0-SNAPSHOT |      1.1.1.RELEASE | works with `spring-io-1.1.0` or `spring-4.1.2` above |
+
+* `spring-io-platform-1.1.1` comes with `spring-social-1.1.0` and `spring-framework-4.1.4`.
 
 ## how to get
 
@@ -43,7 +45,7 @@ I'm [@ttddyy](https://twitter.com/ttddyy) on twitter if you want to ping me. :)
   SlideShare slideShare = new SlideShareTemplate("api_key", "shared_secret");
   SlideshowOperations slideshowOperations = slideShare.slideshowOperations();
 
-  // you can get/search/edit/delete/upload slideshows
+  // you can do: get/search/edit/delete/upload slideshows
   Slideshow slideshow = slideshowOperations.getSlideshow("0123456", ...);
 ```
 
