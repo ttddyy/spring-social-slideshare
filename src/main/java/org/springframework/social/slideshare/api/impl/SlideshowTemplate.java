@@ -93,7 +93,7 @@ public class SlideshowTemplate implements SlideshowOperations {
 			builder.queryParam("slideshow_id", slideshowId);
 		}
 		if (StringUtils.hasLength(slideshowUrl)) {
-			builder.queryParam("slideshow_id", slideshowUrl);
+			builder.queryParam("slideshow_url", slideshowUrl);
 		}
 		if (StringUtils.hasLength(username)) {
 			builder.queryParam("username", username);
