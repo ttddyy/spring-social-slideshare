@@ -105,7 +105,7 @@ public class SlideshowTemplate implements SlideshowOperations {
 		builder.queryParam("detailed", detailed ? "1" : "0");
 		builder.queryParam("get_transcript", transcript ? "1" : "0");
 
-		String url = builder.toUriString();
+		String url = builder.build().toUriString();  // do not encode here, RestOperations will do.
 		Slideshow slideshow = this.restOperations.getForObject(url, Slideshow.class);
 		return slideshow;
 	}
@@ -129,7 +129,7 @@ public class SlideshowTemplate implements SlideshowOperations {
 			builder.queryParam("detailed", 1);
 		}
 
-		String url = builder.toUriString();
+		String url = builder.build().toUriString();  // do not encode here, RestOperations will do.
 		GetSlideshowsResponse response = this.restOperations.getForObject(url, GetSlideshowsResponse.class);
 		response.setRequestType(GetSlideshowsResponse.RequestType.BY_TAG);
 
@@ -155,7 +155,7 @@ public class SlideshowTemplate implements SlideshowOperations {
 			builder.queryParam("detailed", 1);
 		}
 
-		String url = builder.toUriString();
+		String url = builder.build().toUriString();  // do not encode here, RestOperations will do.
 		GetSlideshowsResponse response = this.restOperations.getForObject(url, GetSlideshowsResponse.class);
 		response.setRequestType(GetSlideshowsResponse.RequestType.BY_GROUP);
 
@@ -197,7 +197,7 @@ public class SlideshowTemplate implements SlideshowOperations {
 			builder.queryParam("get_unconverted", 1);
 		}
 
-		String url = builder.toUriString();
+		String url = builder.build().toUriString();  // do not encode here, RestOperations will do.
 		GetSlideshowsResponse response = this.restOperations.getForObject(url, GetSlideshowsResponse.class);
 		response.setRequestType(GetSlideshowsResponse.RequestType.BY_USER);
 
@@ -274,7 +274,7 @@ public class SlideshowTemplate implements SlideshowOperations {
 		}
 
 
-		String url = builder.toUriString();
+		String url = builder.build().toUriString();  // do not encode here, RestOperations will do.
 		SearchSlideshowsResponse response = this.restOperations.getForObject(url, SearchSlideshowsResponse.class);
 		return response;
 	}
@@ -317,8 +317,7 @@ public class SlideshowTemplate implements SlideshowOperations {
 		// privacy setings
 		setUpPrivacySettings(builder, makeSlideshowPrivate, generateSecretUrl, allowEmbeds, shareWithContacts);
 
-
-		String url = builder.toUriString();
+		String url = builder.build().toUriString();  // do not encode here, RestOperations will do.
 		SlideshowIdHolder response = this.restOperations.getForObject(url, SlideshowIdHolder.class);
 		return response.getId();
 	}
@@ -355,7 +354,7 @@ public class SlideshowTemplate implements SlideshowOperations {
 		builder.queryParam("password", password);
 		builder.queryParam("slideshow_id", slideshowId);
 
-		String url = builder.toUriString();
+		String url = builder.build().toUriString();  // do not encode here, RestOperations will do.
 		SlideshowIdHolder response = this.restOperations.getForObject(url, SlideshowIdHolder.class);
 		return response.getId();
 	}
@@ -401,7 +400,7 @@ public class SlideshowTemplate implements SlideshowOperations {
 				builder, description, tags, makeSrcPublic, makeSlideshowPrivate,
 				generateSecretUrl, allowEmbeds, shareWithContacts);
 
-		String url = builder.toUriString();
+		String url = builder.build().toUriString();  // do not encode here, RestOperations will do.
 		SlideshowIdHolder response = this.restOperations.getForObject(url, SlideshowIdHolder.class);
 		return response.getId();
 	}

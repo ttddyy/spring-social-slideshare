@@ -19,6 +19,7 @@ import org.springframework.social.slideshare.api.impl.xml.JacksonUtils;
 import org.springframework.social.support.ClientHttpRequestFactorySelector;
 import org.springframework.social.support.HttpRequestDecorator;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
@@ -123,9 +124,11 @@ public class SlideShareTemplate implements SlideShare {
 					builder.queryParam("ts", ts);
 					builder.queryParam("hash", hash);
 
-					logger.debug("requesting SlideShare API: " + builder.toUriString());
+					// all params are already encoded at this point
+					UriComponents uriComponents = builder.build(true);
+					logger.debug("requesting SlideShare API: " + uriComponents.toUriString());
 
-					return builder.build().toUri();
+					return uriComponents.toUri();
 				}
 			};
 
