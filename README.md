@@ -27,6 +27,8 @@ I'm [@ttddyy](https://twitter.com/ttddyy) on twitter if you want to ping me. :)
 
 * `spring-io-platform-1.1.1` comes with `spring-social-1.1.0` and `spring-framework-4.1.4`.
 
+* [Changelog](CHANGELOG.md)
+
 ## how to get
 
 
@@ -48,6 +50,10 @@ I'm [@ttddyy](https://twitter.com/ttddyy) on twitter if you want to ping me. :)
   Slideshow slideshow = slideshowOperations.getSlideshow("0123456", ...);
 ```
 
-# TODO
+# Demo Code
 
+I wrote a demo project: [spring-social-slideshare-demo](https://github.com/ttddyy/spring-social-slideshare-demo).
+
+The demo covers basic usecases (get/search/upload/edit/delete slideshow), and simply written in 
+[Application.java](https://github.com/ttddyy/spring-social-slideshare-demo/blob/master/src/main/java/demo/Application.java). 
 
