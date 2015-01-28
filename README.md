@@ -23,7 +23,7 @@ I'm [@ttddyy](https://twitter.com/ttddyy) on twitter if you want to ping me. :)
 
 | spring-social-slideshare | spring-io-platform |                                                 note |
 | ------------------------:| ------------------:|------------------------------------------------------| 
-|                    1.0.0 |      1.1.1.RELEASE | works with `spring-io-1.1.0` or `spring-4.1.2` above |
+|             1.0.0, 1.0.1 |      1.1.1.RELEASE | works with `spring-io-1.1.0` or `spring-4.1.2` above |
 
 * `spring-io-platform-1.1.1` comes with `spring-social-1.1.0` and `spring-framework-4.1.4`.
 
@@ -34,7 +34,7 @@ I'm [@ttddyy](https://twitter.com/ttddyy) on twitter if you want to ping me. :)
   <dependency>
       <groupId>net.ttddyy</groupId>
       <artifactId>spring-social-slideshare</artifactId>
-      <version>1.0.0</version>
+      <version>1.0.1</version>
   </dependency>
 ```
 
